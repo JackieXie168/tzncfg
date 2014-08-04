@@ -1,0 +1,45 @@
+2011/09/01 - Initial version
+	．Setup system datetime by local time zone name which is encoded according to IEEE 1003.1 (POSIX)
+
+2012/01/17 - v0.1
+	．to fix some paring issues for 'Mm.w.d'.
+
+2012/02/09 - v0.2
+	．add a new feature to convert format 'Jn' (Julian day) to 'Mm.w.d'.
+	．add a new feature to convert format date <xxxx-xx-xx> to days < 'Jn' : the year of the n-th day >.
+	．add a new feature to convert format days < 'Jn' : the year of the n-th day > to date <xxxx-xx-xx>.
+	．to fix some bugs for parsing 'Mm.w.d' functions.
+
+2012/02/12 - v0.3
+	．to modify some comment.
+
+2012/03/25 - v0.4
+	．to fix a bug to confirm the year for start and end of the daylight saving time.
+	．to fix for parsing standard/daylight-saving time zone name issues.
+
+2012/04/06 - v0.5
+	．to fix the calculation of timezone offset function.
+
+2012/04/20 - v0.6
+	．to fix Asia/Jerusalem timezone value.
+	．to fix for parsing standard/daylight-saving time zone name issues.
+
+2012/12/19 - v0.7
+	．to fix Asia/Jerusalem timezone value.
+	．to fix Pacific/Easter timezone value.
+	．to fix a bug for parsing 'Mm.w.d' functions.
+
+2012/12/26 - v0.8
+	．to fix memory leak／segmentation fault issues.
+	．to fix timezones value.
+	．add stuff 'LincMad's 2012 Area Code Map with Time Zones.webarchive' 、'timezonedb.csv.zip'.
+
+2012/12/30 - v0.9
+	．import nvram functions to tznconfig package.
+	．Improve timezone accuracy.
+
+2013/09/05 - v1.0
+	．import xutils library to tznconfig package.
+	．import parsing programs：tokenlist & xobjconf.
+	．add test cases for tokenlist & xobjconf.
+	．restructure the program tznconfig.
