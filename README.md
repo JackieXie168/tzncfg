@@ -74,7 +74,7 @@ Setup system date time by local time zone name
 	#A Guide for building the application.
 
 	Building/Compiling Procedure
-		$ svn checkout https://tznconfig.googlecode.com/svn/trunk/ tznconfig
+		$ git clone https://github.com/JackieXie168/tznconfig.git
 		$ cd tznconfig
 		$ ./autogen.sh && make
 
