@@ -76,14 +76,16 @@ inline void sem_down(int semid)
 
 inline void detach_shm(void)
 {
+#if defined(darwin) || defined(__FreeBSD__) || defined(__APPLE__) || defined(MACOSX)
 	union semun sem_union;
 	int shmid = shmget((key_t)NVRAMKEY,(size_t)SHARESIZE,IPC_CREAT|IPC_EXCL|0666);
-
+#endif
 	/* detach the share memory*/
 	if (shmdt(ptr_start)==-1)
 		perror ("shmdt failed\n");
 	shm_flag=1;
 
+#if 0 //defined(darwin) || defined(__FreeBSD__) || defined(__APPLE__) || defined(MACOSX)
 	/* Lastly, delete the shared memory. */
 	if (shmctl(shmid, IPC_RMID, 0) == -1) {
 		fprintf(stderr, "shmctl(IPC_RMID) failed\n");
@@ -93,6 +95,7 @@ inline void detach_shm(void)
 	{
 		perror("free resources: semid ");
 	}
+#endif
 }
 
 void attach_share_memory()
@@ -1191,7 +1194,7 @@ nvram_clean(void)
 {
 #ifndef TARGET_DEVICE
 #if 0
-	char *value,*name;
+	char *value, *name;
 	char line[2048];
 	FILE *fp_ptr=NULL;
 	

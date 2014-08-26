@@ -1,0 +1,636 @@
+bplist00Ò_WebMainResource_WebSubframeArchivesÕ	
+^WebResourceURL_WebResourceFrameName_WebResourceTextEncodingName_WebResourceData_WebResourceMIMEType_#http://famschmid.net/timezones.htmlPUUTF-8O.<!-- saved from url=(0022)http://internet.e-mail --><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>
+<title>Timezones</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<p>Last update: 29.03.2011 </p>
+<h3>Timezones:</h3>
+<p>The timezone definitions change each year, so the list is in constant change.<br>
+  The goal was to find one representative timezone for each region. Ideally this would result in 48 definitions, 24 for standard time and 24 for daylight saving time. <br>
+  Because countries in the same timezone have different begin and end times for daylight saving time the list needed to be adopted to this fact.<br>
+The information on this page was taken out from:<br>
+<a href="ftp://elsie.nci.nih.gov/pub/" target="_blank">ftp://elsie.nci.nih.gov/pub/</a><a href="ftp://elsie.nci.nih.gov/pub/" target="_blank"><br>
+  </a>and<br>
+  <a href="http://www.timeanddate.com/worldclock/" target="_blank">http://www.timeanddate.com/worldclock/</a><br>
+The <a href="uclinuxtutorial_nios.html#ntp">TZ</a> value marks the UTC offset aswell as begin and end of daylight saving time in Posix conform standard. </p>
+<table width="100%" border="1">
+  <tbody><tr> 
+    <th width="20%">Official Timezone Name</th>
+    <th width="17%">Other Common Timezone Name</th>
+    <th width="13%">Abbreviation<br>
+    (Standard Time)</th>
+    <th width="13%">Abbreviation<br>
+      (Daylight Saving Time) </th>
+    <th width="18%">Deviation from UTC<br>
+      (for Standard Time)</th>
+    <th width="19%">Timezone Uses Daylight Saving Time</th>
+    <th width="19%">TZ (valid for 2011) </th>
+  </tr>
+  <tr> 
+    <td>Pacific/Apia</td>
+    <td>Pacific/Samoa</td>
+    <td>WST</td>
+    <td>&nbsp;</td>
+    <td>UTC-11</td>
+    <td>yes</td>
+    <td>WST+11,M9.5.0,M4.1.6</td>
+  </tr>
+  <tr> 
+    <td>Pacific/Honolulu</td>
+    <td>US/Hawaii</td>
+    <td>HAST</td>
+    <td>&nbsp;</td>
+    <td>UTC-10</td>
+    <td>no</td>
+    <td>HAST+10</td>
+  </tr>
+  <tr> 
+    <td>America/Anchorage</td>
+    <td>US/Alaska</td>
+    <td>AKST</td>
+    <td>AKDT</td>
+    <td>UTC-9</td>
+    <td>yes</td>
+    <td>AKST+9AKDT,M3.2.0,M11.1.0</td>
+  </tr>
+  <tr> 
+    <td>America/Los_Angeles</td>
+    <td>US/Pacific</td>
+    <td>PST</td>
+    <td>PDT</td>
+    <td>UTC-8</td>
+    <td>yes</td>
+    <td>PST+8PDT,M3.2.0,M11.1.0</td>
+  </tr>
+  <tr>
+    <td>America/Tijuana</td>
+    <td>&nbsp;</td>
+    <td>PST</td>
+    <td>PDT</td>
+    <td>UTC-8</td>
+    <td>yes</td>
+    <td>PST+8PDT,M3.2.0,M11.1.0</td>
+  </tr>
+  <tr> 
+    <td>America/Phoenix</td>
+    <td>US/Arizona</td>
+    <td>MST</td>
+    <td>&nbsp;</td>
+    <td>UTC-7</td>
+    <td>no</td>
+    <td>MST+7</td>
+  </tr>
+  <tr> 
+    <td>America/Denver</td>
+    <td>US/Mountain</td>
+    <td>MST</td>
+    <td>MDT</td>
+    <td>UTC-7</td>
+    <td>yes</td>
+    <td>MST+7MDT,M3.2.0,M11.1.0</td>
+  </tr>
+  <tr>
+    <td>America/Mazatlan</td>
+    <td>&nbsp;</td>
+    <td>MST</td>
+    <td>MDT</td>
+    <td>UTC-7</td>
+    <td>yes</td>
+    <td>MST+7MDT,M4.1.0,M10.5.0</td>
+  </tr>
+  <tr> 
+    <td>America/Chicago</td>
+    <td>US/Central</td>
+    <td>CST</td>
+    <td>CDT</td>
+    <td>UTC-6</td>
+    <td>yes</td>
+    <td>CST+6CDT,M3.2.0,M11.1.0</td>
+  </tr>
+  <tr> 
+    <td>America/Regina</td>
+    <td>Canada/Saskatchewan</td>
+    <td>CST</td>
+    <td>&nbsp;</td>
+    <td>UTC-6</td>
+    <td>no</td>
+    <td>CST+6</td>
+  </tr>
+  <tr>
+    <td>America/Mexico_City</td>
+    <td>&nbsp;</td>
+    <td>CST</td>
+    <td>CDT</td>
+    <td>UTC-6</td>
+    <td>yes</td>
+    <td>CST+6CDT,M4.1.0,M10.5.0</td>
+  </tr>
+  <tr> 
+    <td>America/Bogota</td>
+    <td>&nbsp;</td>
+    <td>COT</td>
+    <td>&nbsp;</td>
+    <td>UTC-5</td>
+    <td>no</td>
+    <td>COT+5</td>
+  </tr>
+  <tr> 
+    <td>America/New_York</td>
+    <td>US/Eastern</td>
+    <td>EST</td>
+    <td>EDT</td>
+    <td>UTC-5</td>
+    <td>yes</td>
+    <td>EST+5EDT,M3.2.0,M11.1.0</td>
+  </tr>
+  <tr>
+    <td>America/Caracas</td>
+    <td>&nbsp;</td>
+    <td>VET</td>
+    <td>&nbsp;</td>
+    <td>UTC-4:30</td>
+    <td>no</td>
+    <td>VET+4:30</td>
+  </tr>
+  <tr> 
+    <td>America/Halifax</td>
+    <td>Canada/Atlantic</td>
+    <td>AST</td>
+    <td>ADT</td>
+    <td>UTC-4</td>
+    <td>yes</td>
+    <td>AST+4ADT,M3.2.0,M11.1.0</td>
+  </tr>
+  <tr>
+    <td>America/Santiago</td>
+    <td>&nbsp;</td>
+    <td>CLT</td>
+    <td>CLST</td>
+    <td>UTC-4</td>
+    <td>yes</td>
+    <td>CLT+4CLST,M8.3.0,M5.1.0</td>
+  </tr>
+  <tr>
+    <td>America/La_Paz</td>
+    <td>&nbsp;</td>
+    <td>BOT</td>
+    <td>&nbsp;</td>
+    <td>UTC-4</td>
+    <td>no</td>
+    <td>BOT+4</td>
+  </tr>
+  <tr> 
+    <td>America/St_Johns</td>
+    <td>Canada/Newfoundland</td>
+    <td>NST</td>
+    <td>NDT</td>
+    <td>UTC-3:30</td>
+    <td>yes</td>
+    <td>NST+3:30NDT,M3.2.0,M11.1.0</td>
+  </tr>
+  <tr> 
+    <td>America/Sao_Paulo</td>
+    <td>Brazil/East</td>
+    <td>BRT</td>
+    <td>BRST</td>
+    <td>UTC-3</td>
+    <td>yes</td>
+    <td>BRT+3BRST,M10.3.0,M2.3.0</td>
+  </tr>
+  <tr> 
+    <td>America/Buenos_Aires</td>
+    <td>&nbsp;</td>
+    <td>ART</td>
+    <td>ARST</td>
+    <td>UTC-3</td>
+    <td>no</td>
+    <td>ART+3</td>
+  </tr>
+  <tr>
+    <td>America/Montevideo</td>
+    <td>&nbsp;</td>
+    <td>UYT</td>
+    <td>UYST</td>
+    <td>UTC-3</td>
+    <td>yes</td>
+    <td>UYT+3UYST,M10.1.0,M3.2.0</td>
+  </tr>
+  <tr> 
+    <td>Atlantic/South_Georgia</td>
+    <td>Atlantic/King_Edward_Point </td>
+    <td>GST</td>
+    <td>&nbsp;</td>
+    <td>UTC-2</td>
+    <td>no</td>
+    <td>GST+2</td>
+  </tr>
+  <tr> 
+    <td>Atlantic/Azores</td>
+    <td>&nbsp;</td>
+    <td>AZOT</td>
+    <td>AZOST</td>
+    <td>UTC-1</td>
+    <td>yes</td>
+    <td>AZOT+1AZOST,M3.5.0,M10.5.0</td>
+  </tr>
+  <tr> 
+    <td>Atlantic/Cape_Verde</td>
+    <td>Atlantic/Praia</td>
+    <td>CVT</td>
+    <td>&nbsp;</td>
+    <td>UTC-1</td>
+    <td>no</td>
+    <td>CVT+1</td>
+  </tr>
+  <tr> 
+    <td>Africa/Casablanca</td>
+    <td>&nbsp;</td>
+    <td>WET</td>
+    <td>&nbsp;</td>
+    <td>UTC</td>
+    <td>no</td>
+    <td>WET+0</td>
+  </tr>
+  <tr> 
+    <td>UTC</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>UTC</td>
+    <td>---</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>Europe/London</td>
+    <td>&nbsp;</td>
+    <td>GMT</td>
+    <td>BST</td>
+    <td>UTC</td>
+    <td>yes</td>
+    <td>GMT+0BST,M3.5.0,M10.5.0</td>
+  </tr>
+  <tr> 
+    <td>Europe/Berlin</td>
+    <td>&nbsp;</td>
+    <td>CET</td>
+    <td>CEST</td>
+    <td>UTC+1</td>
+    <td>yes</td>
+    <td>CET-1CEST,M3.5.0,M10.5.0</td>
+  </tr>
+  <tr>
+    <td>Africa/Kinshasa</td>
+    <td>&nbsp;</td>
+    <td>WAT</td>
+    <td>&nbsp;</td>
+    <td>UTC+1</td>
+    <td>no</td>
+    <td>WAT-1</td>
+  </tr>
+  <tr> 
+    <td>Europe/Istanbul</td>
+    <td>&nbsp;</td>
+    <td>EET</td>
+    <td>EEST</td>
+    <td>UTC+2</td>
+    <td>yes</td>
+    <td>EET-2EEST,M3.5.0,M10.5.0</td>
+  </tr>
+  <tr> 
+    <td>Africa/Cairo</td>
+    <td>&nbsp;</td>
+    <td>EET</td>
+    <td>EEST</td>
+    <td>UTC+2</td>
+    <td>yes</td>
+    <td>EET-2EEST,M4.5.5,M9.5.0</td>
+  </tr>
+  <tr> 
+    <td>Asia/Jerusalem</td>
+    <td>&nbsp;</td>
+    <td>IST</td>
+    <td>IDT</td>
+    <td>UTC+2</td>
+    <td>yes</td>
+    <td>IST-2IDT,M4.1.5,M10.1.0</td>
+  </tr>
+  <tr>
+    <td>Africa/Johannesburg</td>
+    <td>&nbsp;</td>
+    <td>SAST</td>
+    <td>&nbsp;</td>
+    <td>UTC+2</td>
+    <td>no</td>
+    <td>SAST-2</td>
+  </tr>
+  <tr> 
+    <td>Europe/Moscow</td>
+    <td>&nbsp;</td>
+    <td>MSK</td>
+    <td>MSD</td>
+    <td>UTC+3</td>
+    <td>yes (all year) </td>
+    <td>MSD-4</td>
+  </tr>
+  <tr> 
+    <td>Africa/Nairobi</td>
+    <td>&nbsp;</td>
+    <td>EAT</td>
+    <td>&nbsp;</td>
+    <td>UTC+3</td>
+    <td>no</td>
+    <td>EAT-3</td>
+  </tr>
+  <tr> 
+    <td>Asia/Baghdad</td>
+    <td>&nbsp;</td>
+    <td>AST</td>
+    <td>ADT</td>
+    <td>UTC+3</td>
+    <td>no</td>
+    <td>AST-3</td>
+  </tr>
+  <tr> 
+    <td>Asia/Tehran</td>
+    <td>&nbsp;</td>
+    <td>IRST</td>
+    <td>IRDT</td>
+    <td>UTC+3:30</td>
+    <td>yes</td>
+    <td>IRST-3:30IRDT,M3.4.2,M9.5.4</td>
+  </tr>
+  <tr> 
+    <td>Asia/Muscat</td>
+    <td>&nbsp;</td>
+    <td>GST</td>
+    <td>&nbsp;</td>
+    <td>UTC+4</td>
+    <td>no</td>
+    <td>GST-4</td>
+  </tr>
+  <tr> 
+    <td>Asia/Baku</td>
+    <td>&nbsp;</td>
+    <td>AZT</td>
+    <td>AZST</td>
+    <td>UTC+4</td>
+    <td>yes</td>
+    <td>AZT-4AZST,M3.5.0,M10.5.0</td>
+  </tr>
+  <tr> 
+    <td>Asia/Kabul</td>
+    <td>&nbsp;</td>
+    <td>AFT</td>
+    <td>&nbsp;</td>
+    <td>UTC+4:30</td>
+    <td>no</td>
+    <td>AFT-4:30</td>
+  </tr>
+  <tr> 
+    <td>Asia/Karachi</td>
+    <td>&nbsp;</td>
+    <td>PKT</td>
+    <td>&nbsp;</td>
+    <td>UTC+5</td>
+    <td>no</td>
+    <td>PKT-5</td>
+  </tr>
+  <tr> 
+    <td>Asia/Kolkata</td>
+    <td>&nbsp;</td>
+    <td>IST</td>
+    <td>&nbsp;</td>
+    <td>UTC+5:30</td>
+    <td>no</td>
+    <td>IST-5:30</td>
+  </tr>
+  <tr> 
+    <td>Asia/Katmandu</td>
+    <td>&nbsp;</td>
+    <td>NPT</td>
+    <td>&nbsp;</td>
+    <td>UTC+5:45</td>
+    <td>no</td>
+    <td>NPT-5:45</td>
+  </tr>
+  <tr> 
+    <td>Asia/Almaty</td>
+    <td>&nbsp;</td>
+    <td>ALMT</td>
+    <td>&nbsp;</td>
+    <td>UTC+6</td>
+    <td>no</td>
+    <td>ALMT-6</td>
+  </tr>
+  <tr> 
+    <td>Asia/Dhaka</td>
+    <td>&nbsp;</td>
+    <td>BST</td>
+    <td>&nbsp;</td>
+    <td>UTC+6</td>
+    <td>no</td>
+    <td>BST-6</td>
+  </tr>
+  <tr> 
+    <td>Asia/Rangoon</td>
+    <td>Asia/Naypyidaw</td>
+    <td>MMT</td>
+    <td>&nbsp;</td>
+    <td>UTC+6:30</td>
+    <td>no</td>
+    <td>MMT-6:30</td>
+  </tr>
+  <tr> 
+    <td>Asia/Bangkok</td>
+    <td>&nbsp;</td>
+    <td>ICT</td>
+    <td>&nbsp;</td>
+    <td>UTC+7</td>
+    <td>no</td>
+    <td>ICT-7</td>
+  </tr>
+  <tr> 
+    <td>Asia/Hong_Kong</td>
+    <td>&nbsp;</td>
+    <td>HKT</td>
+    <td>&nbsp;</td>
+    <td>UTC+8</td>
+    <td>no</td>
+    <td>HKT-8</td>
+  </tr>
+  <tr> 
+    <td>Asia/Singapore</td>
+    <td>&nbsp;</td>
+    <td>SGT</td>
+    <td>&nbsp;</td>
+    <td>UTC+8</td>
+    <td>no</td>
+    <td>SGT-8</td>
+  </tr>
+  <tr> 
+    <td>Australia/Perth</td>
+    <td>&nbsp;</td>
+    <td>WST</td>
+    <td>WDT</td>
+    <td>UTC+8</td>
+    <td>no</td>
+    <td>WST-8</td>
+  </tr>
+  <tr> 
+    <td>Asia/Taipei</td>
+    <td>&nbsp;</td>
+    <td>CST</td>
+    <td>&nbsp;</td>
+    <td>UTC+8</td>
+    <td>no</td>
+    <td>CST-8</td>
+  </tr>
+  <tr> 
+    <td>Asia/Tokyo</td>
+    <td>&nbsp;</td>
+    <td>JST</td>
+    <td>&nbsp;</td>
+    <td>UTC+9</td>
+    <td>no</td>
+    <td>JST-9</td>
+  </tr>
+  <tr> 
+    <td>Asia/Seoul</td>
+    <td>&nbsp;</td>
+    <td>KST</td>
+    <td>&nbsp;</td>
+    <td>UTC+9</td>
+    <td>no</td>
+    <td>KST-9</td>
+  </tr>
+  <tr> 
+    <td>Australia/Adelaide</td>
+    <td>&nbsp;</td>
+    <td>CST</td>
+    <td>CDT</td>
+    <td>UTC+9:30</td>
+    <td>yes</td>
+    <td>CST-9:30CDT,M10.1.0,M4.1.0</td>
+  </tr>
+  <tr>
+    <td>Australia/Darwin</td>
+    <td>&nbsp;</td>
+    <td>CST</td>
+    <td>&nbsp;</td>
+    <td>UTC+9:30</td>
+    <td>no</td>
+    <td>CST-9:30</td>
+  </tr>
+  <tr> 
+    <td>Australia/Sydney</td>
+    <td>&nbsp;</td>
+    <td>EST</td>
+    <td>EDT</td>
+    <td>UTC+10</td>
+    <td>yes</td>
+    <td>EST-10EDT,M10.1.0,M4.1.0</td>
+  </tr>
+  <tr>
+    <td>Australia/Brisbane</td>
+    <td>&nbsp;</td>
+    <td>EST</td>
+    <td>&nbsp;</td>
+    <td>UTC+10</td>
+    <td>no</td>
+    <td>EST-10</td>
+  </tr>
+  <tr> 
+    <td>Pacific/Noumea</td>
+    <td>&nbsp;</td>
+    <td>NCT</td>
+    <td>&nbsp;</td>
+    <td>UTC+11</td>
+    <td>no</td>
+    <td>NCT-11</td>
+  </tr>
+  <tr> 
+    <td>Pacific/Auckland</td>
+    <td>&nbsp;</td>
+    <td>NZST</td>
+    <td>NZDT</td>
+    <td>UTC+12</td>
+    <td>yes</td>
+    <td>NZST-12NZDT,M9.5.0,M4.1.0</td>
+  </tr>
+  <tr> 
+    <td>Pacific/Kwajalein</td>
+    <td>&nbsp;</td>
+    <td>MHT</td>
+    <td>&nbsp;</td>
+    <td>UTC+12</td>
+    <td>no</td>
+    <td>MHT-12</td>
+  </tr>
+</tbody></table>
+<hr>
+<div align="center">
+<iframe align="center" frameborder="0" scrolling="no" height="33" width="201" marginheight="0" marginwidth="0" src="taskbarwhite.html"></iframe></div>
+
+
+</body></html>Ytext/html¡Ò(_WebSubresources¤#Ô_WebResourceResponse_#http://famschmid.net/frameallbg.gifObGIF89aÉ ! ÷  )kœ{{{ÎÎÆÖÎÆÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ!ù    ,    É !  þ Hp €ƒ*\È°¡Ã‡#JœH±¢Å‹	jÜX0! CŠI²¤É“(Sª\É²¥Ë— rœ	 £Í›8sêÜÉS!ÍŽ=ƒ
+J´¨ÃŸ5XÊ´©Ó§P£JJµªÕ«X³jÝú”áL¥ŒŠK¶ìÁ¥9*k¶­Û·8ÙÊÔ¸®Ý»xÊ=áÞ¼€»ýK0á_ÁˆÝkÐ¯âÇ‡2Nz6²åË7'ÆÌ¹sDÆ›=‹Z)éÓ¢WFÍú²j¯[ËÎûšÀìÛˆm3Ô»÷]Þ
+ûn8eáÄ“å-Ð£òçES€ºuœÒ_ß®“yãƒÕ¹@‹‡˜½9ÂðãÓ;ŸÛ—ºú÷Ë^ÿ½ð¯Ñ×OþÑçÏà0(à€hà€þ!5Ý~ï)ØƒÜ9ˆ„Ï)  ;Yimage/gifOMbplist00ÔfgX$versionX$objectsY$archiverT$top † ¯"()012JKLMNOPQRSTUVWXYZ[\`aU$nullÝ	
+ !R$6S$10R$2R$7R$3S$11R$8V$classR$4R$9R$0R$5R$1€€€ €€€€ €Ó#$%&[NS.relativeWNS.base€€€ _#http://famschmid.net/frameallbg.gifÒ*+,-Z$classnameX$classesUNSURL¢./UNSURLXNSObject#A´ì}%CJÈÓ3456@WNS.keysZNS.objects€©789:;<=>?€	€
+€€€€€€€©ABCDEFGHI€€€€€€€€€VServer]Accept-RangesZConnection\Content-TypeTDate]Last-Modified^Content-LengthTEtagZKeep-Alive_2Apache/2.2.9 (Debian) mod_ssl/2.2.9 OpenSSL/0.9.8gUbytesZKeep-AliveYimage/gif_Tue, 30 Aug 2011 10:01:31 GMT_Sun, 04 Mar 2007 21:13:28 GMTT1122_"62a42e4c-462-42ae04fe08e00"_timeout=15, max=100Ò*+]^_NSMutableDictionary£]_/\NSDictionarybÒ*+bc_NSHTTPURLResponse£de/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiverÑhi_WebResourceResponse€    # - 2 7 X ^ y | € ƒ † ‰   — š    £ ¦ ¨ ª ¬ ® ° ² ´ ¶ ¸ º ¼ ¾ Å Ñ Ù Û Ý ß
+$'-6?AHP[]gikmoqsuwyƒ…‡‰‹‘“•œªµÂÇÕäéô)/:Dd„‰¨¾ÃÙÝêíò
+,>AW             j              YÔ_http://famschmid.net/home.jpgO6ÿØÿà JFIF ,,  ÿÛ C 		
+ $.' ",#(7),01444'9=82<.342ÿÛ C			2!!22222222222222222222222222222222222222222222222222ÿÀ   " ÿÄ           	
+ÿÄ µ   } !1AQa"q2‘¡#B±ÁRÑð$3br‚	
+%&'()*456789:CDEFGHIJSTUVWXYZcdefghijstuvwxyzƒ„…†‡ˆ‰Š’“”•–—˜™š¢£¤¥¦§¨©ª²³´µ¶·¸¹ºÂÃÄÅÆÇÈÉÊÒÓÔÕÖ×ØÙÚáâãäåæçèéêñòóôõö÷øùúÿÄ        	
+ÿÄ µ  w !1AQaq"2B‘¡±Á	#3RðbrÑ
+$4á%ñ&'()*56789:CDEFGHIJSTUVWXYZcdefghijstuvwxyz‚ƒ„…†‡ˆ‰Š’“”•–—˜™š¢£¤¥¦§¨©ª²³´µ¶·¸¹ºÂÃÄÅÆÇÈÉÊÒÓÔÕÖ×ØÙÚâãäåæçèéêòóôõö÷øùúÿÚ   ? ô=CP‡N·2ÊF…yç;z8’@ ± ð¾5Ö<eáí9å1= ˜á}±ÈÈ¢6%0®rùŠ€Hyq²’óÃú?‰í5-júÚÑÍ»ˆZêãjoR eRvîIìgFpq\uïÄ-WÃ~'µ½ñ¬Ò&•Ö+$«¼JÌc*,b#©9<ðÍÉTŒUõû¾fôß/½díÜôJ*;H,,­ìí“Ë··b‰2NÕQ€2y<ôVæDÔQE QE ÿÙZimage/jpegOFbplist00ÔfgX$versionX$objectsY$archiverT$top † ¯"()012JKLMNOPQRSTUVWXYZ[\`aU$nullÝ	
+ !R$6S$10R$2R$7R$3S$11R$8V$classR$4R$9R$0R$5R$1€€€ €€€€ €Ó#$%&[NS.relativeWNS.base€€€ _http://famschmid.net/home.jpgÒ*+,-Z$classnameX$classesUNSURL¢./UNSURLXNSObject#A´ì|¼üÈÓ3456@WNS.keysZNS.objects€©789:;<=>?€	€
+€€€€€€€©ABCDEFGHI€€€€€€€€€VServer]Accept-RangesZConnection\Content-TypeTDate]Last-Modified^Content-LengthTEtagZKeep-Alive_2Apache/2.2.9 (Debian) mod_ssl/2.2.9 OpenSSL/0.9.8gUbytesZKeep-AliveZimage/jpeg_Tue, 30 Aug 2011 10:01:30 GMT_Sun, 04 Mar 2007 21:13:33 GMTS822_"62a42e4e-336-42ae0502cd940"_timeout=15, max=98Ò*+]^_NSMutableDictionary£]_/\NSDictionary6Ò*+bc_NSHTTPURLResponse£de/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiverÑhi_WebResourceResponse€    # - 2 7 X ^ y | € ƒ † ‰   — š    £ ¦ ¨ ª ¬ ® ° ² ´ ¶ ¸ º ¼ ¾ Å Ñ Ù Û Ý ß ÿ!'09;BJUWacegikmoqs}ƒ…‡‰‹–¤¯¼ÁÏÞãî#)4?_ƒ¢·¼ÒÖãæëÿ%7:P             j              RÕ !"_-http://www.statcounter.com/counter/counter.jsUutf-8OVvar sc_width=screen.width;var sc_height=screen.height;var sc_referer=""+document.referrer;try{sc_referer=""+parent.document.referrer}catch(ex){sc_referer=""+document.referrer}var sc_unique=0;var sc_returning=0;var sc_returns=0;var sc_error=0;var sc_remove=0;var sc_cls=-1;var sc_inv=0;var sc_os="";var sc_title="";var sc_url="";var sc_base_dir="";var sc_click_dir="";var sc_link_back_start="";var sc_link_back_end="";var sc_security_code="";var sc_http_url="http";var sc_host="statcounter.com";if(window.sc_invisible){if(window.sc_invisible==1){sc_inv=1}}if(window.sc_click_stat){sc_cls=window.sc_click_stat}if(window.sc_https){if(sc_https==1){sc_doc_loc=''+document.location;myRE=new RegExp("^https","i");if(sc_doc_loc.match(myRE)){sc_http_url="https"}}}if(window.sc_local){sc_base_dir=sc_local}else{if(sc_cls==-1){sc_cls=1}sc_base_dir=sc_http_url+"://c."+sc_host+"/"}sc_click_dir=sc_base_dir;if(window.sc_text){sc_base_dir+="text.php?"}else{sc_base_dir+="t.php?"}if(window.sc_project){sc_base_dir+="sc_project="+sc_project}else if(window.usr){sc_base_dir+="usr="+usr}else{sc_error=1}if(window.sc_remove_link){sc_link_back_start="";sc_link_back_end=""}else{sc_link_back_start="<a class=\"statcounter\" href=\"http://www."+sc_host+"\" target=\"_blank\">";sc_link_back_end="<\/a>"}sc_date=new Date();sc_time=sc_date.getTime();sc_time_difference=3600000;sc_title=""+document.title;sc_url=""+document.location;sc_referer=sc_referer.substring(0,600);sc_title=sc_title.substring(0,300);sc_url=sc_url.substring(0,300);sc_referer=escape(sc_referer);if(encodeURIComponent){sc_title=encodeURIComponent(sc_title)}else{sc_title=escape(sc_title)}sc_url=escape(sc_url);if(window.sc_security){sc_security_code=sc_security}if(sc_script_num){sc_script_num++}else{var sc_script_num=1}var sc_tracking_url=sc_base_dir+"&resolution="+sc_width+"&h="+sc_height+"&camefrom="+sc_referer+"&u="+sc_url+"&t="+sc_title+"&java=1&security="+sc_security_code+"&sc_random="+Math.random()+"&sc_snum="+sc_script_num;var sc_clstr="<span class=\"statcounter\">";var sc_cltext="\" alt=\"StatCounter - Free Web Tracker and Counter\" border=\"0\">";var sc_strout=sc_clstr+sc_link_back_start+"<img src=\""+sc_tracking_url+sc_cltext+sc_link_back_end+"</span>";if(sc_error==1){document.writeln("Code corrupted. Insert fresh copy.")}else if(sc_remove==1){}else{if(sc_inv==1){if(window.sc_call){sc_call++}else{sc_call=1}eval("var sc_img"+sc_call+" = new Image();sc_img"+sc_call+".src = \""+sc_tracking_url+"&invisible=1\"")}else if(window.sc_text){document.writeln('<scr'+'ipt language="JavaScript"'+' src='+sc_tracking_url+"&text="+sc_text+'></scr'+'ipt>')}else{document.writeln(sc_strout)}}if(sc_cls>0){if(clickstat_done!=1){var clickstat_done=1;var clickstat_project=window.sc_project;var clickstat_security=window.sc_security_code;var dlext="7z|aac|avi|csv|doc|docx|exe|flv|gif|gz|jpe?g|js|mp(3|4|e?g)|mov|pdf|phps|png|ppt|rar|sit|tar|torrent|txt|wma|wmv|xls|xlsx|xml|zip";if(typeof(window.sc_download_type)=='string'){dlext=window.sc_download_type}var ltype="https?|ftp|telnet|ssh|ssl|mailto";var second="ac|co|gov|ltd|me|mod|net|nic|nhs|org|plc|police|sch|com";var dl=new RegExp("\\.("+dlext+")$","i");var lnk=new RegExp("^("+ltype+"):","i");var domsec=new RegExp("\^("+second+")$","i");var host_name=location.host.replace(/^www\./i,"");var host_splitted=host_name.split(".");var domain=host_splitted.pop();var host_split=host_splitted.pop();if(domsec.test(host_split)){domain=host_split+"."+domain;host_split=host_splitted.pop()}domain=host_split+"."+domain;var lnklocal_mask="^https?:\/\/(.*)("+domain+"|webcache.googleusercontent.com)";var lnklocal=new RegExp(lnklocal_mask,"i");if(document.getElementsByTagName){var anchors=document.getElementsByTagName('a');for(var i=0;i<anchors.length;i++){var anchor=anchors[i];if(anchor.onmousedown){var original_click=anchor.onmousedown;var s=original_click.toString().split("\n").join(" ");var bs=s.indexOf('{');var head=s.substr(0,bs);var ps=head.indexOf('(');var pe=head.indexOf(')');var params=head.substring(ps+1,pe);var plist=params.split(",");var body=s.substr(bs+1,s.length-bs-2);var insert="sc_clickstat_call(this,'"+sc_click_dir+"');";var final_body=insert+body;var ev_head="new Function (";var ev_params="";var ev_sep="";for(var sc_i=0;sc_i<plist.length;sc_i++){ev_params=ev_sep+"'"+plist[sc_i]+"'";ev_sep=","}if(ev_sep==","){ev_params+=","}var ev_foot="final_body);";var ev_final=ev_head+ev_params+ev_foot;anchor.onmousedown=eval(ev_final)}else{anchor.onmousedown=new Function("event","sc_clickstat_call(this,'"+sc_click_dir+"');return true;")}}}function sc_none(){return}function sc_delay(){if(window.sc_click_stat){var d=window.sc_click_stat}else{var d=250}var n=new Date();var t=n.getTime()+d;while(n.getTime()<t){var n=new Date()}}function sc_clickstat_call(adata,sc_click_dir){if(adata){var clickmode=0;if(lnk.test(adata)){if((lnklocal.test(adata))){if(dl.test(adata)){clickmode=1}else if(window.sc_exit_link_detect&&new RegExp(sc_exit_link_detect,"i").test(adata)){clickmode=2}else if(sc_cls==2){clickmode=2}}else{clickmode=2}}if(clickmode!=0){var sc_link=escape(adata);if(sc_link.length>0){var sc_req=sc_click_dir+"click.gif?sc_project="+clickstat_project+"&security="+clickstat_security+"&c="+sc_link+"&m="+clickmode+"&u="+sc_url+"&t="+sc_title+"&rand="+Math.random();var sc_req_image=new Image();sc_req_image.onload=sc_none;sc_req_image.src=sc_req;sc_delay()}}}}var sc_gsyn_pattern='googlesyndication\.com|ypn-js\.overture\.com|ypn-js\.ysm\.yahoo\.com|googleads\.g\.doubleclick\.net';var sc_gsyn_pattern2='^aswift_[0-9]+$';var sc_px;var sc_py;function sc_adsense_click(sc_data){if(sc_data.src.match(sc_gsyn_pattern)){var sc_link=escape(sc_data.src)}else{var sc_link=escape("Google Adsense "+sc_data.width+"x"+sc_data.height)}var i=new Image();var sc_req=sc_click_dir+"click.gif?sc_project="+clickstat_project+"&security="+clickstat_security+"&c="+sc_link+"&m=2&u="+sc_url+"&t="+sc_title+"&rand="+Math.random();i.src=sc_req;sc_delay()}function sc_adsense_init(){if(document.all&&typeof window.opera=="undefined"){var el=document.getElementsByTagName("iframe");for(var i=0;i<el.length;i++){if(el[i].src.match(sc_gsyn_pattern)||el[i].id.match(sc_gsyn_pattern2)){el[i].onfocus=function(){sc_adsense_click(this)}}}}else{if(typeof window.addEventListener!="undefined"){window.addEventListener("unload",sc_exitpage,false);window.addEventListener("mousemove",sc_getmouse,true)}}}if(typeof window.addEventListener!='undefined'){window.addEventListener('load',sc_adsense_init,false)}else{if(typeof document.addEventListener!='undefined'){document.addEventListener('load',sc_adsense_init,false)}else{if(typeof window.attachEvent!='undefined'){window.attachEvent('onload',sc_adsense_init)}else{if(typeof window.onload=='function'){var sc_existing=onload;window.onload=function(){sc_existing();sc_adsense_init()}}else{window.onload=sc_adsense_init}}}}function sc_getmouse(e){if(typeof e.pageX=="number"){sc_px=e.pageX;sc_py=e.pageY}else{if(typeof e.clientX=="number"){sc_px=e.clientX;sc_py=e.clientY;if(document.body&&(document.body.scrollLeft||document.body.scrollTop)){sc_px+=document.body.scrollLeft;sc_py+=document.body.scrollTop}else{if(document.documentElement&&(document.documentElement.scrollLeft||document.documentElement.scrollTop)){sc_px+=document.documentElement.scrollLeft;sc_py+=document.documentElement.scrollTop}}}}}function sc_findy(obj){var y=0;while(obj){y+=obj.offsetTop;obj=obj.offsetParent}return(y)}function sc_findx(obj){var x=0;while(obj){x+=obj.offsetLeft;obj=obj.offsetParent}return(x)}function sc_exitpage(e){ad=document.getElementsByTagName("iframe");if(typeof sc_px=="undefined"){return}for(var i=0;i<ad.length;i++){var adLeft=sc_findx(ad[i]);var adTop=sc_findy(ad[i]);var adW=parseInt(adLeft)+parseInt(ad[i].width)+15;var adH=parseInt(adTop)+parseInt(ad[i].height)+10;var inFrameX=(sc_px>(adLeft-10)&&sc_px<adW);var inFrameY=(sc_py>(adTop-10)&&sc_py<adH);if(inFrameY&&inFrameX){if(ad[i].src.match(sc_gsyn_pattern)||ad[i].id.match(sc_gsyn_pattern2)){sc_adsense_click(ad[i])}}}}}}_application/x-javascriptO?bplist00ÔvwX$versionX$objectsY$archiverT$top † ¯&"()012RSTUVWXYZ[\]^_`abcdefghijklpqU$nullÝ	
+ !R$6S$10R$2R$7R$3S$11R$8V$classR$4R$9R$0R$5R$1€€€ €$€%€€ €Ó#$%&[NS.relativeWNS.base€€€ _-http://www.statcounter.com/counter/counter.jsÒ*+,-Z$classnameX$classesUNSURL¢./UNSURLXNSObject#A´èp,ZqÈÓ3456DWNS.keysZNS.objects€#­789:;<=>?@ABC€	€
+€€€€€€€€€€€­EFGHIJKLMNOPQ€€€€€€€€€€€ €!€"VServerZConnectionTEtag_Content-EncodingTVary\Content-Type_Px-Uncompress-Origin]Cache-ControlTX-Px]Last-ModifiedSP3pTDate^Content-Length[PWS/1.7.3.3Zkeep-alive_"4948cb-1f56-4dd51a2a"Tgzip_Accept-Encoding_'application/x-javascript; charset=utf-8T8022]max-age=43200_ht sea-ag1-n12.panthercdn.com_Thu, 19 May 2011 13:24:58 GMT_Ypolicyref="http://www.statcounter.com/w3c/p3p.xml", CP="ADMa OUR COM NAV NID DSP NOI COR"_Tue, 30 Aug 2011 09:44:16 GMTT2731Ò*+mn_NSMutableDictionary£mo/\NSDictionaryVÒ*+rs_NSHTTPURLResponse£tu/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiverÑxy_WebResourceResponse€    # - 2 7 ` f  „ ˆ ‹ Ž ‘ • ˜ Ÿ ¢ ¥ ¨ « ® ° ² ´ ¶ ¸ º ¼ ¾ À Â Ä Æ Í Ù á ã å ç'069?HQSZbmo}ƒ…‡‰‹‘“•—¥§©«­¯±³µ·¹»½¿ÆÑÖéîû %37<KWb{€’¼ÁÏïk‹•«¯¼¿ÄØÜðþ)             z              +Ô$%&'_ http://famschmid.net/webstat.gifOœGIF87a  ò   1A´s‹”´Þœ”½î 1œÍÿs½ÿæöÿ,       ixºÜ^.ÆbT¹8ë\ [HW÷…š@¥r¢Ø*´Ãˆ™6¼r.[n 	èvÁÂjEŒ±€µU ÷+›È(é²¤nx³õ©á¡ªåäí«^C_îìgN¯Ó)A»~Ž?ÄÙ‚ƒ„……ˆˆ	 ;Yimage/gifOGbplist00ÔfgX$versionX$objectsY$archiverT$top † ¯"()012JKLMNOPQRSTUVWXYZ[\`aU$nullÝ	
+ !R$6S$10R$2R$7R$3S$11R$8V$classR$4R$9R$0R$5R$1€€€ €€€€ €Ó#$%&[NS.relativeWNS.base€€€ _ http://famschmid.net/webstat.gifÒ*+,-Z$classnameX$classesUNSURL¢./UNSURLXNSObject#A´ì}WqÈÓ3456@WNS.keysZNS.objects€©789:;<=>?€	€
+€€€€€€€©ABCDEFGHI€€€€€€€€€VServer]Accept-RangesZConnection\Content-TypeTDate]Last-Modified^Content-LengthTEtagZKeep-Alive_2Apache/2.2.9 (Debian) mod_ssl/2.2.9 OpenSSL/0.9.8gUbytesZKeep-AliveYimage/gif_Tue, 30 Aug 2011 10:01:31 GMT_Sun, 12 Jul 2009 17:30:12 GMTS156_"62a42e5a-9c-46e858ec7b100"_timeout=15, max=100Ò*+]^_NSMutableDictionary£]_/\NSDictionaryœÒ*+bc_NSHTTPURLResponse£de/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiverÑhi_WebResourceResponse€    # - 2 7 X ^ y | € ƒ † ‰   — š    £ ¦ ¨ ª ¬ ® ° ² ´ ¶ ¸ º ¼ ¾ Å Ñ Ù Û Ý ß!$*3<>EMXZdfhjlnprtv€‚„†ˆŠŒŽ’™§²¿ÄÒáæñ&,7Aa…£¹¾ÔØåçì &8;Q             j              SÕ)*+,-_&http://famschmid.net/taskbarwhite.html_ <!--framePath //<!--frame0-->-->UUTF-8OK<html><head>
+<title>Taskbar</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body marginwidth="0" marginheight="0">
+<table width="100%" border="0" height="37" background="frameallbg.gif">
+  <tbody><tr> 
+    <td width="50"><a href="../../index.html" target="_parent"><img src="../../home.jpg" width="20" height="18" alt="Home" border="0" hspace="10"></a> 
+    </td>
+    <td width="50"><!-- Begin counter --> 
+      <div align="center"> 
+        <script language="JavaScript" src="http://www.countnow.de/cgi-bin/counter-adv.cgi?u=schmidmanfred">
+        </script>
+      </div>
+      <!-- End counter --> </td>
+    <td width="50" align="right">
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+var sc_project=4903112; 
+var sc_invisible=1; 
+var sc_partition=57; 
+var sc_click_stat=1; 
+var sc_security="9d1ba63e"; 
+</script>
+
+<script type="text/javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript>&lt;div
+class="statcounter"&gt;&lt;a title="counter for wordpress"
+href="http://www.statcounter.com/wordpress.com/"
+target="_blank"&gt;&lt;img class="statcounter"
+src="http://c.statcounter.com/4903112/0/9d1ba63e/1/"
+alt="counter for wordpress" &gt;&lt;/a&gt;&lt;/div&gt;</noscript>
+<!-- End of StatCounter Code -->
+<!-- Begin of StatCounter Link -->
+<a href="http://my.statcounter.com/project/standard/stats.php?project_id=4903112&amp;guest=1" target="_blank"><img src="webstat.gif" alt="View My Stats" width="22" height="22" border="0"></a> 
+<!-- End of StatCounter Link -->
+
+    </td>
+  </tr>
+</tbody></table>
+
+
+</body></html>Ytext/html    5 @ O f „ – ¬ Ò Ó Ù.û/////#/,/B/h3Î3Ø8)828R;Œ;—?á?ì@@"_|_—dÚdãee¥e¯iújj.jQjWp¦             .              p°

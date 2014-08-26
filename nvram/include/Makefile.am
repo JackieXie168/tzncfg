@@ -1,3 +1,3 @@
-include_HEADERS = bcmconfig.h bcmnvram.h typedefs.h
+include_HEADERS = bcmnvram.h typedefs.h
 
 CLEANFILES = *~ *.log

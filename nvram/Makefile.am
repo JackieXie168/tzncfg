@@ -17,7 +17,6 @@ DIST_SUBDIRS = .
 #Build in these directories:
 
 COMMON_FILES=\
-	./include/bcmconfig.h \
 	./include/bcmnvram.h \
 	./include/typedefs.h
 
@@ -39,7 +38,7 @@ pkgconfig_DATA = nvram-1.0.pc
 
 EXTRA_DIST=autogen.sh
 
-h_sources = ./include/bcmconfig.h ./include/bcmnvram.h ./include/typedefs.h
+h_sources = ./include/bcmnvram.h ./include/typedefs.h
 c_sources = ./src/nvram_cavium.c
 
 library_includedir=$(includedir)/$(GENERIC_LIBRARY_NAME)-$(GENERIC_API_VERSION)/$(GENERIC_LIBRARY_NAME)

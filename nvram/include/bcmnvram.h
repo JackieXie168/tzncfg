@@ -26,6 +26,10 @@
 //#include <typedefs.h>
 #include <typedefs.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct nvram_header {
 	uint32 magic;
 	uint32 len;
@@ -56,7 +60,7 @@ struct varinit {
 /*share memory identifier (note. must greater than share memory size)*/
 #define NVRAMKEY 655350
 /*share memory size*/
-#define SHARESIZE 65536*2
+#define SHARESIZE 262144
 #define MAGIC_ID "<NVRAM>"
 
 #if __linux__
@@ -210,6 +214,10 @@ extern int BCMINIT(nvram_getall)(char *buf, int count);
 #define NVRAM_MAGIC		0x48534C46	/* 'FLSH' */
 #define NVRAM_VERSION		1
 #define NVRAM_HEADER_SIZE	20
-#define NVRAM_SPACE		0x80000
+#define NVRAM_SPACE		0x160000
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif /* _bcmnvram_h_ */
