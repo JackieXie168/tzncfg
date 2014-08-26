@@ -1,0 +1,263 @@
+NTP installation and configuration
+
+STEP 1 (Test the current server):
+
+Try issuing the following command:
+
+$ ntpq -pn
+
+remote refid st t when poll reach delay offset jitter
+===================================================
+tock.usno.navy 0.0.0.0 16 u - 64 0 0.000 0.000 4000.00
+
+The above is an example of a problem.
+Compare it to a working configuration.
+
+$ ntpq -pn
+
+remote refid st t when poll reach delay offset jitter
+========================================================
++128.4.40.12 128.4.40.10 2 u 107 128 377 25.642 3.350 1.012
+127.127.1.0 127.127.1.0 10 l 40 64 377 0.000 0.000 0.008
++128.91.2.13 128.4.40.12 3 u 34 128 377 21.138 6.118 0.398
+*192.5.41.41 .USNO. 1 u 110 128 377 33.69 9.533 3.534
+
+STEP 2 (Configure the /etc/ntp.conf):
+
+$ cat /etc/ntp.conf
+
+# My simple client-only ntp configuration.
+server timeserver1.upenn.edu
+# ping -a timeserver1.upenn.edu shows the IP address 128.91.2.13
+# which is used in the restrict below
+restrict 128.91.2.13
+server tock.usno.navy.mil
+restrict 192.5.41.41
+server 128.4.40.12
+restrict 128.4.40.12
+server 127.127.1.0 # local clock
+fudge 127.127.1.0 stratum 10
+driftfile /etc/ntp/drift
+restrict default ignore
+restrict 127.0.0.0 mask 255.0.0.0
+authenticate no
+
+STEP 3 (Configure /etc/ntp/step-tickers):
+
+The values for server above are placed in the "/etc/ntp/step-tickers" file
+
+$ cat /etc/ntp/step-tickers
+
+timeserver1.upenn.edu
+tock.usno.navy.mil
+128.4.40.12
+
+The startup script /etc/rc.d/init.d/ntpd will grab the servers in this
+file and execute the ntpdate command as follows:
+
+/usr/sbin/ntpdate -s -b -p 8 timeserver1.upenn.edu
+
+Why? Because if the time is off ntpd will not start. The command above set the
+clock. If System Time deviates from true time by more than 1000 seconds, then,
+the ntpd daemon will enter panic mode and exit.
+
+STEP 4 (Restart the service and check):
+
+Issue the restart command
+
+/etc/init.d/ntpd restart
+
+check the values for "ntpq -pn",
+which should match step 1.
+
+ntpq -pn
+
+
+SPECIAL NOTE:
+
+Time is always stored in the kernel as the number of seconds since
+midnight of the 1st of January 1970 UTC, regardless of whether the
+hardware clock is stored as UTC or not. Conversions to local time
+are done at run-time. So, it's easy to get the time in different
+timezones for only the current session as follows:
+
+
+$ export TZ=EST
+$ date
+Mon Aug 2 10:34:04 EST 2004
+
+$ export TZ=NET
+$ date
+Mon Aug 2 15:34:18 NET 2004
+
+The following are possible values for TZ:
+
+Hours From Greenwich Mean Time (GMT) Value Description
+0 GMT Greenwich Mean Time
++1 ECT European Central Time
++2 EET European Eastern Time
++2 ART
++3 EAT Saudi Arabia
++3.5 MET Iran
++4 NET
++5 PLT West Asia
++5.5 IST India
++6 BST Central Asia
++7 VST Bangkok
++8 CTT China
++9 JST Japan
++9.5 ACT Central Australia
++10 AET Eastern Australia
++11 SST Central Pacific
++12 NST New Zealand
+-11 MIT Samoa
+-10 HST Hawaii
+-9 AST Alaska
+-8 PST Pacific Standard Time
+-7 PNT Arizona
+-7 MST Mountain Standard Time
+-6 CST Central Standard Time
+-5 EST Eastern Standard Time
+-5 IET Indiana East
+-4 PRT Atlantic Standard Time
+-3.5 CNT Newfoundland
+-3 AGT Eastern South America
+-3 BET Eastern South America
+-1 CAT Azores
+
+DST timezone
+
+0 BST for British Summer.
++400 ADT for Atlantic Daylight.
++500 EDT for Eastern Daylight.
++600 CDT for Central Daylight.
++700 MDT for Mountain Daylight.
++800 PDT for Pacific Daylight.
++900 YDT for Yukon Daylight.
++1000 HDT for Hawaii Daylight.
+-100 MEST for Middle European Summer,
+MESZ for Middle European Summer,
+SST for Swedish Summer and FST for French Summer.
+-700 WADT for West Australian Daylight.
+-1000 EADT for Eastern Australian Daylight.
+-1200 NZDT for New Zealand Daylight.
+
+The following is an example of setting the TZ environment variable
+for the timezone, only when timezone changes go into effect.
+
+$ export TZ=EST+5EDT,M4.1.0/2,M10.5.0/2
+
+     "Note, even though TZ was adjusted for daylight saving time, will you get 
+     the correct time 5 months from now? When does daylight saving time go into 
+     effect? The TZ value shown below adjust for dst, only during the correct 
+     dates. For instance, this entry goes into effect April, the first week, at 
+     2am, and ends October the 5th week, at 2am. Note 10.5.0 stands for the 5th 
+     week in October, and not the 5th day."
+
+  				$ export TZ=EST+5EDT,M4.1.0/2,M10.5.0/2
+
+Take a look at the last line "M10.5.0/2". What does it mean? Here is the
+documentation
+
+
+Mm.w.d This specifies day d (0 <= d <= 6) of week w (1 <= w <= 5) of
+month m (1 <= m <= 12). Week 1 is the first week in which day d
+occurs and week 5 is the last week in which day d occurs. Day 0
+is a Sunday.
+
+The time fields specify when, in the local time currently in
+effect, the change to the other time occurs. If omitted,
+the default is 02:00:00.
+
+So this is what it means. M10 stands for October, the 5 is the fifth week
+that includes a Sunday (note 0 in M10.5.0/2 is Sunday). To see that it is
+the fifth week see the calendar below. The time change occurs a 2am in
+the morning. (Special Note: In 2007, DST was extended. See TIP 230).
+
+October
+Su Mo Tu We Th Fr Sa
+1 2
+3 4 5 6 7 8 9
+10 11 12 13 14 15 16
+17 18 19 20 21 22 23
+24 25 26 27 28 29 30
+31
+
+Prove it. Take the following program sunrise, which can calcuates sunrise
+and sunset for an latitude and longitude. This program can be downloaded
+from the following location:
+http://sourceforge.net/direct-dl/mchirico/souptonuts/working_with_time.tar.gz
+
+Below is a bash script that will run the program for the next 100 days.
+
+#!/bin/bash
+# program: next100days Mike Chirico
+# download:
+# http://sourceforge.net/direct-dl/mchirico/souptonuts/working_with_time.tar.gz
+#
+# This will calculate the sunrise and sunset for
+# latitude 39.95 Note must convert to degrees
+# longitude 75.15 Note must convert to degrees
+lat=39.95
+long=75.15
+for (( i=0; i <= 100; i++))
+do
+sunrise `date -d "+$i day" "+%Y %m %d"` $lat $long
+done
+
+Take a look at the following sample output.
+
+$ export TZ=EST+5EDT,M4.1.0/2,M10.5.0/2
+$ ./next100days
+
+Sunrise 08-24-2004 06:21:12 Sunset 08-24-2004 19:43:42
+Sunrise 08-25-2004 06:22:09 Sunset 08-25-2004 19:42:12
+Sunrise 08-26-2004 06:23:06 Sunset 08-26-2004 19:40:41
+Sunrise 08-27-2004 06:24:03 Sunset 08-27-2004 19:39:09
+Sunrise 08-28-2004 06:25:00 Sunset 08-28-2004 19:37:37
+Sunrise 08-29-2004 06:25:56 Sunset 08-29-2004 19:36:04
+Sunrise 08-30-2004 06:26:53 Sunset 08-30-2004 19:34:31
+Sunrise 08-31-2004 06:27:50 Sunset 08-31-2004 19:32:57
+Sunrise 09-01-2004 06:28:46 Sunset 09-01-2004 19:31:22
+Sunrise 09-02-2004 06:29:43 Sunset 09-02-2004 19:29:47
+..[values omitted ]
+Sunrise 10-28-2004 07:25:31 Sunset 10-28-2004 18:02:34
+Sunrise 10-29-2004 07:26:38 Sunset 10-29-2004 18:01:19
+Sunrise 10-30-2004 07:27:46 Sunset 10-30-2004 18:00:06
+Sunrise 10-31-2004 06:28:53 Sunset 10-31-2004 16:58:54
+Sunrise 11-01-2004 06:30:01 Sunset 11-01-2004 16:57:44
+Sunrise 11-02-2004 06:31:10 Sunset 11-02-2004 16:56:35
+
+Compare 10-30-2004 with 10-31-2004. Sunrise is an hour earlier because
+daylight saving time has ended, just as predicted.
+
+There is an easier way to switch between timezones. Take a look at the
+directory zoneinfo as follows:
+
+$ ls /usr/share/zoneinfo
+
+Africa Chile Factory Iceland Mexico posix UCT
+America CST6CDT GB Indian Mideast posixrules Universal
+Antarctica Cuba GB-Eire Iran MST PRC US
+Arctic EET GMT iso3166.tab MST7MDT PST8PDT UTC
+Asia Egypt GMT0 Israel Navajo right WET
+Atlantic Eire GMT-0 Jamaica NZ ROC W-SU
+Australia EST GMT+0 Japan NZ-CHAT ROK zone.tab
+Brazil EST5EDT Greenwich Kwajalein Pacific Singapore Zulu
+Canada Etc Hongkong Libya Poland SystemV
+CET Europe HST MET Portugal Turkey
+
+TZ can be set to any one of these files. Some of these are directories and contain
+subdirectories, such as ./posix/America. This way you don not have to enter the
+timezone, offset, and range for dst, since it has already been calculated.
+
+$ export TZ=:/usr/share/zoneinfo/posix/America/Aruba
+$ export TZ=:/usr/share/zoneinfo/Egypt
+
+
+Reference:
+http://prdownloads.sourceforge.net/cpearls/date_calc.tar.gz?download
+
+Also see (TIP 27).
+Also see (TIP 103) using chrony which is very similiar to ntpd.
+Note time settings can usually be found in /etc/sysconfig/clock.

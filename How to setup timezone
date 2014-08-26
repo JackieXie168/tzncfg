@@ -1,0 +1,245 @@
+【How to setup timezone】
+
+By default, an OpenWRT router operates in the UTC (Universal Time Coordinate) time zone.
+
+OpenWRT stores the time zone inside a file named /etc/TZ. If this file is missing or empty, OpenWRT assumes the local time equals UTC time. The format is pretty strange, and has the following syntax:
+
+syntax ::= GMT< 'offset>
+
+offset ::= (+|-)
+
+hour ::= [ 00 - 12 ]
+
+The is the value you must add to or substract from the local time to get the UTC time. This offset will be positive if the local time zone is west of the Prime Meridian and negative if it is east. For example, TZ must be set to GMT-1 for Madrid, which is GMT+1:
+
+# echo GMT-1 > /etc/TZ
+
+UPDATED: The syntax for the TZ variable is documented here[http://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html].
+
+Following this document[Specifying the Time Zone with TZ], the correct contents for file /etc/TZ when located in Madrid would be:
+
+CET-1CEST-2,M3.5.0/2,M10.5.0/3
+
+──────────────────────────────────────────
+
+Specifying the Time Zone with TZ
+
+In POSIX systems, a user can specify the time zone by means of the TZ environment variable. For information about how to set environment variables, see Environment Variables. The functions for accessing the time zone are declared in time.h. You should not normally need to set TZ. If the system is configured properly, the default time zone will be correct. You might set TZ if you are using a computer over a network from a different time zone, and would like times reported to you in the time zone local to you, rather than what is local to the computer.
+
+In POSIX.1 systems the value of the TZ variable can be in one of three formats. With the GNU C library, the most common format is the last one, which can specify a selection from a large database of time zone information for many regions of the world. The first two formats are used to describe the time zone information directly, which is both more cumbersome and less precise. But the POSIX.1 standard only specifies the details of the first two formats, so it is good to be familiar with them in case you come across a POSIX.1 system that doesn't support a time zone information database.
+
+The first format is used when there is no Daylight Saving Time (or summer time) in the local time zone:
+
+     std offset
+
+The std string specifies the name of the time zone. It must be three or more characters long and must not contain a leading colon, embedded digits, commas, nor plus and minus signs. There is no space character separating the time zone name from the offset, so these restrictions are necessary to parse the specification correctly.
+
+The offset specifies the time value you must add to the local time to get a Coordinated Universal Time value. It has syntax like [+|-]hh[:mm[:ss]]. This is positive if the local time zone is west of the Prime Meridian and negative if it is east. The hour must be between 0 and 23, and the minute and seconds between 0 and 59.
+
+For example, here is how we would specify Eastern Standard Time, but without any Daylight Saving Time alternative:
+
+     EST+5
+
+The second format is used when there is Daylight Saving Time:
+
+     std offset dst [offset],start[/time],end[/time]
+
+The initial std and offset specify the standard time zone, as described above. The dst string and offset specify the name and offset for the corresponding Daylight Saving Time zone; if the offset is omitted, it defaults to one hour ahead of standard time.
+
+The remainder of the specification describes when Daylight Saving Time is in effect. The start field is when Daylight Saving Time goes into effect and the end field is when the change is made back to standard time. The following formats are recognized for these fields:
+
+Jn
+	This specifies the Julian day, with n between 1 and 365. February 29 is never counted, even in leap years. 
+
+n
+	This specifies the Julian day, with n between 0 and 365. February 29 is counted in leap years. 
+
+Mm.w.d
+	This specifies day d of week w of month m. The day d must be between 0 (Sunday) and 6. The week w must be between 1 and 5; week 1 is the first week in which day d occurs, and week 5 specifies the last d day in the month. The month m should be between 1 and 12.
+
+The time fields specify when, in the local time currently in effect, the change to the other time occurs. If omitted, the default is 02:00:00.
+
+For example, here is how you would specify the Eastern time zone in the United States, including the appropriate Daylight Saving Time and its dates of applicability. The normal offset from UTC is 5 hours; since this is west of the prime meridian, the sign is positive. Summer time begins on the first Sunday in April at 2:00am, and ends on the last Sunday in October at 2:00am.
+
+     EST+5EDT,M4.1.0/2,M10.5.0/2
+The schedule of Daylight Saving Time in any particular jurisdiction has changed over the years. To be strictly correct, the conversion of dates and times in the past should be based on the schedule that was in effect then. However, this format has no facilities to let you specify how the schedule has changed from year to year. The most you can do is specify one particular schedule—usually the present day schedule—and this is used to convert any date, no matter when. For precise time zone specifications, it is best to use the time zone information database (see below).
+
+The third format looks like this:
+
+     :characters
+Each operating system interprets this format differently; in the GNU C library, characters is the name of a file which describes the time zone.
+
+If the TZ environment variable does not have a value, the operation chooses a time zone by default. In the GNU C library, the default time zone is like the specification ‘TZ=:/etc/localtime’ (or ‘TZ=:/usr/local/etc/localtime’, depending on how GNU C library was configured; see Installation[http://www.gnu.org/software/libc/manual/html_node/Installation.html#Installation]). Other C libraries use their own rule for choosing the default time zone, so there is little we can say about them.
+
+If characters begins with a slash, it is an absolute file name; otherwise the library looks for the file /share/lib/zoneinfo/characters. The zoneinfo directory contains data files describing local time zones in many different parts of the world. The names represent major cities, with subdirectories for geographical areas; for example, America/New_York, Europe/London, Asia/Hong_Kong. These data files are installed by the system administrator, who also sets /etc/localtime to point to the data file for the local time zone. The GNU C library comes with a large database of time zone information for most regions of the world, which is maintained by a community of volunteers and put in the public domain.
+
+  ──────────────────────────────
+	標準時區										經度						時差
+  ──────────────────────────────
+	GMT , Greenwich Mean Time		0   W/E				標準時間
+	CET , Central European				15  E					+1  東一區
+	EET , Eastern European				30  E					+2  東二區
+	BT  , Baghdad								45  E					+3  東三區
+	USSR, Zone 3 								60  E					+4  東四區
+	USSR, Zone 4								75  E					+5  東五區
+	Indian, First									82.3E					+5.5東五半區
+	USSR, Zone 5								90  E					+6  東六區
+	SST , South Sumatra					105 E					+7  東七區
+	JT  , Java										112 E					+7.5東七半區
+  ──────────────────────────────
+	CCT , China Coast (台灣所在地)	120 E					+8  東八區
+  ──────────────────────────────
+	JST , Japan									135 E					+9  東九區
+	SAST, South Australia					142 E					+9.5東九半區
+	GST , Guam									150 E					+10 東十區
+	NZT , New Zealand						180 E					+12 東十二區
+	Int'l Date Line								180 E/W				國際換日線
+	BST , Bering								165 W					-11 西十一區
+	SHST, Alaska/Hawaiian				150 W					-10 西十區
+	YST , Yukon								135 W					-9  西九區
+	PST , Pacific								120 W					-8  西八區
+	MST , Mountain							105 W					-7  西七區
+	CST , Central								90  W					-6  西六區
+	EST , Eastern								75  W					-5  西五區
+	AST , Atlantic								60  W					-4  西四區
+	Brazil, Zone 2								45  W					-3  西三區
+	AT  , Azores									30  W					-2  西二區
+	WAT , West Africa						15  W					-1  西一區
+  ──────────────────────────────
+
+
+──────────────────────────────────────────
+
+objective-c setting NSDate to current UTC
+
+-(NSString *)getUTCFormateDate:(NSDate *)localDate
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+    [dateFormatter setTimeZone:timeZone];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dateString = [dateFormatter stringFromDate:localDate];
+    [dateFormatter release];
+    return dateString;
+}
+
+──────────────────────────────────────────
+
+static inline time_t local_to_gmt(struct super_block *s, time32_t t) 
+{ 
+	extern struct timezone sys_tz; 
+	return t + sys_tz.tz_minuteswest * 60 + hpfs_sb(s)->sb_timeshift; 
+} 
+
+static inline time32_t gmt_to_local(struct super_block *s, time_t t) 
+{ 
+	extern struct timezone sys_tz; 
+	return t - sys_tz.tz_minuteswest * 60 - hpfs_sb(s)->sb_timeshift; 
+} 
+
+And here's some more: 
+
+/* Convert a MS-DOS time/date pair to a UNIX date (seconds since 1 1 70). */ 
+int date_dos2unix(unsigned short time, unsigned short date) 
+{ 
+	int month, year, secs; 
+	
+	/* 
+	* first subtract and mask after that... Otherwise, if 
+	* date == 0, bad things happen 
+	*/ 
+	month = ((date >> 5) - 1) & 15; 
+	year = date >> 9; 
+	secs = (time & 31)*2+60*((time >> 5) & 63)+(time >> 11)*3600+86400* ((date & 31)-1+day_n[month]+(year/4)+year*365-((year & 3) == 0 && month < 2 ? 1 : 0)+3653); 
+	/* days since 1.1.70 plus 80's leap day */ 
+	secs += sys_tz.tz_minuteswest*60; 
+	return secs; 
+} 
+
+And from kernel/time.c: 
+
+asmlinkage long sys_gettimeofday(struct timeval __user *tv, struct 
+timezone __user *tz) 
+{ 
+	if (likely(tv != NULL)) { 
+		struct timeval ktv; 
+		do_gettimeofday(&ktv); 
+		if (copy_to_user(tv, &ktv, sizeof(ktv))) 
+			return -EFAULT; 
+	} 
+	if (unlikely(tz != NULL)) { 
+		if (copy_to_user(tz, &sys_tz, sizeof(sys_tz))) 
+			return -EFAULT; 
+	} 
+	return 0; 
+} 
+
+──────────────────────────────────────────
+
+#include <time.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#define _GNU_SOURCE
+#include <getopt.h>
+
+void showhelp(){
+    printf("這個程序可以顯示當前時間，或者通過指名時區顯示某個時區的當前時間\n");
+    printf("用法：gmtime_my [選項]\n");
+    printf("選項：\n");
+    printf("    --timezone=[時區] ： 指定要顯示的時區\n");
+    printf("    -z [時區] ： 指定要顯示的時區\n");
+    printf("    --help ： 顯示本幫助\n");
+    printf("    -h ： 顯示本幫助\n");
+}
+
+int main(int argc, char *argv[]){
+    
+    int opt;
+    
+    struct option longopts[] = {
+        {"timezone", 1, NULL, 'z'},
+        {"help", 0, NULL, 'h'},
+        {0,0,0,0}
+    };
+    
+    int timezone = 0;
+    char *timezonez = "+0";
+    short int settimezone = 0;
+    while((opt = getopt_long(argc, argv, ":z:h", longopts, NULL)) != -1){
+        if(opt == 'z'){
+            timezone = atoi(optarg);  //這個是把字串轉換成整數的函數
+            timezonez = optarg;
+            settimezone = 1;
+            if(timezone < -12 || timezone > 12){
+                printf("時區是在-12到12之間的整數，而不是%s\n", optarg);
+                exit(0);
+            }
+        }else if(opt == 'h'){
+            showhelp();
+            exit(0);
+        }else if(opt == '?'){
+            showhelp();
+            exit(0);
+        }
+    }
+    
+    struct tm *tm_ptr;
+    time_t the_time;
+    
+    (void) time(&the_time);
+    if(settimezone == 0){
+        tm_ptr = localtime(&the_time);
+    }else{
+        the_time += (3600 * timezone);
+        tm_ptr = gmtime(&the_time);
+    }
+    
+    if(settimezone == 1){
+        printf("時區是： %s\n", timezonez);
+    }
+    printf("目前的日期時間為:\n");
+    printf("    日期: %02d年%02d月%02d日\n", 1900+tm_ptr->tm_year, tm_ptr->tm_mon+1, tm_ptr->tm_mday);
+    printf("    時間: %02d:%02d:%02d\n", tm_ptr->tm_hour, tm_ptr->tm_min, tm_ptr->tm_sec);
+    exit(0);
+}
