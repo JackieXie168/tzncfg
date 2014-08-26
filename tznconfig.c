@@ -138,9 +138,9 @@ written by jackie xie
 Date   :  2007/07/10
 ================================================================*/
 /* 
- *	delimiters = ±n：return position before n-th matched substr.
- *	delimiters =   0 ：do nothing.
- *	delimiters =  -1 ：returns the array element number where "substr" occurs in "str".
+ *	delimiters = ±n : return position before n-th matched substr.
+ *	delimiters =   0  : do nothing.
+ *	delimiters =  -1  : returns the array element number where "substr" occurs in "str".
  */
 int matchStrPosAt (char * substr, char * str, int delimiters/* , bool docutail*/)
 {
@@ -234,7 +234,7 @@ char *strcutail (char *str, const char *n, int pos)
 			(_new)[i] = str[i];
 
 		strcpy(str, _new);
-		free (_new);
+		//free (_new);
 	}
 	return str;
 }
@@ -278,6 +278,48 @@ char *strmhead (char *str, const char *n, int pos)
 	
 	return str;
 }
+
+char *index_str(char *str, const char *n, int index)
+{
+	int i, _matchedStrLen;
+	int str_len = strlen(str), delm_len = strlen(n);
+	int _newStrLen = 0;
+	int idx1, idx2;
+	char *_new;
+	
+	index = abs(index);
+	if(index == 0 || index > matchStrPosAt(n, str, -1) + 1)
+		return NULL;
+	else if(index == 1){
+		idx1 = 0;
+		idx2 = matchStrPosAt(n, str, index) - delm_len - 1;
+	}
+	else if(index > 1 && index <= matchStrPosAt(n, str, -1)){
+		idx1 = matchStrPosAt(n, str, index - 1) + 1;
+		idx2 = matchStrPosAt(n, str, index) - delm_len - 1;
+	}
+	else if(index == matchStrPosAt(n, str, -1) + 1){
+		idx1 = matchStrPosAt(n, str, index - 1) + 1;
+		idx2 = 	str_len - 1;
+	}
+	_newStrLen = idx2 - idx1 + 1;
+	if(_newStrLen < 0)
+		_newStrLen = str_len - 1;
+	/*printf("idx1 = %d\n", idx1);
+	printf("idx2 = %d\n", idx2);
+	printf("new strlen = %d\n", _newStrLen);*/
+	if ((_new = (char *)malloc(_newStrLen)) == NULL)
+		return NULL;
+	(_new)[_newStrLen + 1] = '\0';		
+	for (i = 0; i <= _newStrLen; ++i)
+		(_new)[i] = str[idx1+i];
+
+	strcpy(str, _new);
+	//str = StrDup(_new);
+	//StrFree(_new);
+	return str;
+}
+
 
 bool isLeapYear (int year)
 {
@@ -447,7 +489,7 @@ int jds2mds(int days, char* dst)
 {
 	time_t when;
 	struct tm	*whentm;
-	char	month[4], DayOfMonth[3], weekday[3];
+	char	month[5], DayOfMonth[4], weekday[4];
 	int WeekOfMonth;
 
 	when = days * 24 * 60 * 60;
@@ -619,33 +661,68 @@ Date : 2011/08/18
 ================================================================*/
 int setTZ(char *timezone)
 {
-	struct tm *tptr;
+	struct tm *tptr, time_to_set;
 	struct timeval tv;
 	struct timezone tz;
 	time_t secs;
 	int utc = 0;
-	int hsecs, msecs;
+	int hsecs, msecs = 0, ssecs = 0, tzhour, tzminute;
 	int rc;
-	char *sHour = strdup(timezone);
-	char *sMin = strdup(timezone);
+	char *sHour = StrDup(timezone);
+	char *sMin = StrDup(timezone);
+	char *sSec = StrDup(timezone);
+	char *sTZ = StrDup(timezone);
+
+	if(!timezone)
+		return -1;
 
 	(void) time(&secs);
 	tptr = localtime(&secs);
-	printf("The timezone is 'UTC%s'\n", timezone);
-	printf("The current date/time :\n");
-	printf("        Date : %02d-%02d-%02d\n", 1900+tptr->tm_year, tptr->tm_mon+1, tptr->tm_mday);
-	printf("        Time : %02d:%02d:%02d\n\n", tptr->tm_hour, tptr->tm_min, tptr->tm_sec);
+	printf("The timezone is : UTC%s\n", timezone);
+	printf("The current date/time : \n");
+	printf("	Date : %02d-%02d-%02d\n", 1900+tptr->tm_year, tptr->tm_mon+1, tptr->tm_mday);
+	printf("	Time : %02d:%02d:%02d\n\n", tptr->tm_hour, tptr->tm_min, tptr->tm_sec);
 
-	if(strstr(timezone,":")){
-		hsecs = atoi(strcutail(sHour, ":", -100)) * 3600;
-		msecs = atoi(strmhead(sMin, ":", -100)) * 60;
+	if(strstr(timezone,":") && matchStrPosAt(":", timezone, -1) == 1){
+		/*hsecs = atoi(strcutail(sHour, ":", -100)) * 3600;
+		msecs = atoi(strmhead(sMin, ":", -100)) * 60;*/
+		hsecs = atoi(index_str(sHour, ":", 1)) * 3600;
+		msecs = atoi(index_str(sMin, ":", 2)) * 60;
+		tzminute = atoi(sMin);
+	}
+	else if(strstr(timezone, ":") && matchStrPosAt(":", timezone, -1) == 2){
+		hsecs = atoi(index_str(sHour, ":", 1)) * 3600;
+		msecs = atoi(index_str(sMin, ":", 2)) * 60;
+		ssecs = atoi(index_str(sSec, ":", 3));
+		tzminute = atoi(sMin);
 	}
 	else{
 		hsecs = atoi(sHour) * 3600;
 		msecs = 0;
-	}	
+	}
+
+	if(msecs == 0 && ssecs == 0){
+		if(hsecs > 0)
+			sprintf(sTZ, "GMT+%02d", hsecs/3600);
+		else
+			sprintf(sTZ, "GMT%02d", hsecs/3600);
+	}
+	else if(ssecs == 0){
+		if(hsecs > 0)
+			sprintf(sTZ, "GMT+%02d:%02d", hsecs/3600, msecs/60);
+		else
+			sprintf(sTZ, "GMT%02d:%02d", hsecs/3600, msecs/60);
+	}
+	else{
+		if(hsecs > 0)
+			sprintf(sTZ, "GMT+%02d:%02d:%02d", hsecs/3600, msecs/60, ssecs);
+		else
+			sprintf(sTZ, "GMT%02d:%02d:%02d", hsecs/3600, msecs/60, ssecs);
+	}
+
+	tzhour = atoi(sHour);
 	
-	utc = hsecs + msecs;
+	utc = hsecs + msecs + ssecs;
 	 (void) time(&secs);
 	
 	if(utc==0)
@@ -659,6 +736,7 @@ int setTZ(char *timezone)
 	if ((tv.tv_sec = mktime(tptr)) == (time_t)-1)
 	{
 		printf("Cannot convert system time\n");
+		return -1;
 	}
 
 	tz.tz_minuteswest = -(secs / 60);	
@@ -673,13 +751,16 @@ int setTZ(char *timezone)
 	else
 		printf("settimeofday() successful.\n");
 
-	printf("Update timezone:'UTC%s'\n", timezone);
-	printf("The new date/time is :\n");
-	printf("        Date: %02d-%02d-%02d\n", 1900+tptr->tm_year, tptr->tm_mon+1, tptr->tm_mday);
-	printf("        Time: %02d:%02d:%02d\n\n", tptr->tm_hour, tptr->tm_min, tptr->tm_sec);
 
-	free(sMin);
-	free(sHour);
+	printf("新時區是 : UTC%s\n", timezone);
+	printf("更新後的日期和時間分別為:\n");
+	printf("	日期: %02d年%02d月%02d日\n", 1900+tptr->tm_year, tptr->tm_mon+1, tptr->tm_mday);
+	printf("	時間: %02d:%02d:%02d\n\n", tptr->tm_hour, tptr->tm_min, tptr->tm_sec);
+
+	StrFree(sMin);
+	StrFree(sHour);
+	StrFree(sSec);
+	StrFree(sTZ);
 	
 	return 0;
 }
@@ -747,10 +828,10 @@ Date : 2011/08/28
 int setTZName(char *tzname)
 {
 	char *offsets = strdup(tzname);
-	char stz[10]={0};
-	char dtz[10]={0};
-	char stz_offset[10]={0};
-	char dtz_offset[10]={0};
+	char stz[12]={0};
+	char dtz[12]={0};
+	char stz_offset[12]={0};
+	char dtz_offset[12]={0};
 	char *start_dst = NULL;
 	char *end_dst = NULL;
 	int len, i = -1, chstr = 0, chnum = 0;
@@ -789,7 +870,7 @@ int setTZName(char *tzname)
 		currtime.week = atoi(week);
 		currtime.month = atoi(month);
 		currtime.year = atoi(year);
-		printf("current time is %d-%d-%dT%d:%d:%dZ\n", currtime.year, currtime.month, currtime.day, currtime.time.hour, currtime.time.minute, currtime.time.second);
+		printf("current time is %d-%02d-%02dT%02d:%02d:%02dZ\n", currtime.year, currtime.month, currtime.day, currtime.time.hour, currtime.time.minute, currtime.time.second);
 
 		start_dst = strdup(tzname);
 		end_dst = strdup(tzname);
@@ -1029,7 +1110,11 @@ int setTZName(char *tzname)
 		else
 			stzsecond = 0;
 
+#ifdef ENABLE_TIMEZONE_OFFSET
 		if(strstr(dtz_offset, "-")) dtz_is_minus = true;
+#else
+		if(strstr(dtz_offset, "-")) dtz_is_minus = false;
+#endif
 		dtzhour = atoi(strcutail(dhour, ":", -1));
 		if(matchStrPosAt(":", dminute, -1) == 2)
 		dtzminute = atoi(GetStrBetweenStr(dminute, ":", ":"));
@@ -1057,6 +1142,7 @@ int setTZName(char *tzname)
 		else
 			stzhour = atoi(shour) * (-1);
 
+#ifdef ENABLE_TIMEZONE_OFFSET
 		if(stzhour < 0 || ((strstr(stz, "GMT") || strstr(stz, "UTC") || !strcmp(stz, "")) && strstr(shour, "-"))
 			|| (!strcmp(shour, "00") && !strstr(shour, "-") && !(strstr(stz, "GMT") || strstr(stz, "UTC") || !strcmp(stz, ""))))
 			stz_is_minus = true;
@@ -1109,10 +1195,19 @@ int setTZName(char *tzname)
 		else 
 			dtzhour = stzhour;
 
+#else
+		if(!dtz_is_minus) dtzhour = dtzhour * (-1);
+		if((dstlen && !dofflen) || dtzhour == 0){
+			dtzhour = stzhour + 1;
+			dtzminute = stzminute;
+			dtzsecond = stzsecond;
+		}
+#endif
+
 		if(dtzhour == 0 && (dtzminute < 0 || dtzsecond < 0))
 			dtz_is_minus = true;
 
-		if(strstr(stz_offset, ":") || strstr(dtz_offset, ":") && ((dtzminute != 0 || dtzsecond != 0) || (stzminute != 0 || stzsecond != 0)))
+		if((strstr(stz_offset, ":") || strstr(dtz_offset, ":")) && ((dtzminute != 0 || dtzsecond != 0) || (stzminute != 0 || stzsecond != 0)))
 		{
 			if(dtzhour > 0)
 				sprintf(dtz_offset, "+%02d:%02d:%02d", dtzhour, dtzminute, dtzsecond);
@@ -1179,19 +1274,19 @@ int main(int argc, char *argv[])
 
 	strcat(help_msg, "tzconfig command summary\n");
 	strcat(help_msg, "\ttzconfig is a function to setup/get timezone infomation.\n");
-	strcat(help_msg, "\t-s：setup datetime for specified timezone.\n");
-	strcat(help_msg, "\t\t<timezone>(input format)：'<+ | ->xx:xx' (x=[0~9]).\n");
-	strcat(help_msg, "\t-x：setup datetime for specified timezone name.\n");
-	strcat(help_msg, "\t\t<timezone name>(input format)：'std offset dst [offset],start[/time],end[/time]' .\n");
-	strcat(help_msg, "\t-d：To convert date to days.\n");
-	strcat(help_msg, "\t-j：To convert days to date.\n");
+	strcat(help_msg, "\t-s : setup datetime for specified timezone.\n");
+	strcat(help_msg, "\t\t<timezone>(input format) : '<+ | ->xx:xx' (x=[0~9]).\n");
+	strcat(help_msg, "\t-x : setup datetime for specified timezone name.\n");
+	strcat(help_msg, "\t\t<timezone name>(input format) : 'std offset dst [offset],start[/time],end[/time]' .\n");
+	strcat(help_msg, "\t-d : To convert date to days.\n");
+	strcat(help_msg, "\t-j : To convert days to date.\n");
 	strcat(help_msg, "\t\t leap year : 0 ~ 365 \n");
 	strcat(help_msg, "\t\t otherwise : 1 ~ 365 \n");
-	strcat(help_msg, "\t-m：To convert 'Jn' to 'Mm.w.d' format. \n");
+	strcat(help_msg, "\t-m : To convert 'Jn' to 'Mm.w.d' format. \n");
 	strcat(help_msg, "\t\t where 'Jn' is specifies the Julian day, with n between 1 and 365. February 29 is never counted, even in leap years. \n");
 	strcat(help_msg, "\t\t where 'n' is the days of this year which means the Julian day, with n between 0 and 365. February 29 is counted in leap years. \n");
-	strcat(help_msg, "\t-i：To get the local timezone information.\n");
-	strcat(help_msg, "\t-h：To show this help message.\n");
+	strcat(help_msg, "\t-i : To get the local timezone information.\n");
+	strcat(help_msg, "\t-h : To show this help message.\n");
 
 	if(argc <= 1 || ((isgraph(*argv[1]) || ispunct(*argv[1])) && *argv[1]!='-'))
 		fprintf(stderr, "%s", help_msg);
@@ -1225,7 +1320,7 @@ int main(int argc, char *argv[])
 			case 'I':
 			case 'i':
 				getTZ(&tz);
-				printf("本地時區是：UTC%s\n", tz);
+				printf("The local time zone is : UTC%s\n", tz);
 				break;
 			case 'M':
 			case 'm':
