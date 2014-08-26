@@ -29,11 +29,11 @@ prog_name = tznconfig
 #
 OS := $(shell uname -s)
 EXECUTABLE := $(prog_name)
-LIBS :=
+LIBS := -L/usr/local/lib -lnvram-1.0
 
 # Now alter any implicit rules' variables if you like, e.g.:
 #
-CFLAGS := -g -Wall -O3
+CFLAGS := -g -Wall -O3 -fno-stack-protector -I/usr/local/include
 CXXFLAGS := $(CFLAGS)
 #CC := g++
 CC := gcc
@@ -94,4 +94,5 @@ endif
 -include $(DEPS)
 
 $(EXECUTABLE) : $(OBJS)
-	$(CC) -o $(EXECUTABLE) $(OBJS) $(addprefix -l,$(LIBS))
+	$(CC) -o $(EXECUTABLE) $(OBJS) $(LIBS)
+#	$(CC) -o $(EXECUTABLE) $(OBJS) $(addprefix -l,$(LIBS))
