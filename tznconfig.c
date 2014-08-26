@@ -325,7 +325,9 @@ int dayOfMonth(datetime dt)
 
 	if(isLeapYear(dt.year))
 		years[February] = 29;
-	
+	else
+		years[February] = 28;
+
 	//printf("February have %d days in %d\n", years[February], dt.year);
 	
 	day_code = get_day_code(dt.year);
