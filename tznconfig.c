@@ -203,12 +203,12 @@ Date   :  2011/07/15
 char *strcutail (char *str, const char *n, int pos)
 {
 	int i, _newStrLen = (pos != 0)?matchStrPosAt(n, str, abs(pos)): -1;
-	char* _new;
+	char* _new = NULL;
 	
 	if(_newStrLen >= 0){
 		if (pos >= 0)
 			++_newStrLen;			
-		if ((_new = (char *)malloc(_newStrLen)) == NULL)
+		if ((_new = (char *)malloc(sizeof(char*) * _newStrLen + 1)) == NULL)
 			return "NULL";
 
 		(_new)[_newStrLen] = '\0';		
@@ -218,7 +218,7 @@ char *strcutail (char *str, const char *n, int pos)
 			(_new)[i] = str[i];
 
 		strcpy(str, _new);
-		free (_new);
+		free (_new); _new = NULL;
 	}
 	return str;
 }
@@ -248,7 +248,7 @@ char *strmhead (char *str, const char *n, int pos)
 			
 		_newStrLen = str_len - _matchedStrLen;
 
-		if ((_new = (char *)malloc(_newStrLen)) == NULL)
+		if ((_new = (char *)malloc(sizeof(char*) * _newStrLen + 1)) == NULL)
 			return "NULL";
 
 		(_new)[_newStrLen+1] = '\0';		
@@ -257,7 +257,7 @@ char *strmhead (char *str, const char *n, int pos)
 		for (i = 0; i < _newStrLen; ++i)
 			(_new)[i] = str[_matchedStrLen +1 + i];
 		strcpy(str, _new);
-		free (_new);
+		free (_new); _new = NULL;
 	}
 	
 	return str;
@@ -328,17 +328,15 @@ int dayOfMonth(datetime dt)
 	else
 		years[February] = 28;
 
-	//printf("February have %d days in %d\n", years[February], dt.year);
-	
 	day_code = get_day_code(dt.year);
 	for ( month = 1; month < dt.month; month++ )
 	{
 		/* set day_code for next month to begin */
 		day_code = ( day_code + years[month] ) % 7;	
 	}
-	
+
 	days = (dt.day >= day_code)?(dt.day - day_code + 1)+7*(dt.week-1): (7 - day_code + 1) + dt.day + 7*(dt.week-1);
-	
+
 	while(days > years[dt.month])
 		days -= 7;
 	
