@@ -192,6 +192,58 @@ int matchStrPosAt (char * substr, char * str, int delimiters/* , bool docutail*/
 	return matchpos;
 }
 
+/* replaces the first occurence of "in" within the string "source" with
+** the string "new" and returns < 0 if no replacement was made
+*/
+char *replacestr(const char *s, char *in, char *out)
+{
+	int replace_index;
+	int source_len, in_len, out_len;
+ 	int total_len;
+	int i;
+	char *source;
+	char *_new;
+
+ 	replace_index = matchStrPosAt(in, s, 0);
+	printf("\nreplace_index = %d\n", replace_index);
+
+	if (replace_index < 0)
+		return "-1";
+	else
+	{
+		source = strdup (s);
+		source_len = strlen(source);
+		in_len = strlen(in);
+		out_len = strlen(out);
+		total_len = source_len - in_len + out_len + 1;
+
+		/*if(total_len == source_len)
+			total_len = total_len + 1;*/
+
+		//if ((*_new = (char *)calloc(total_len,sizeof(char))) == NULL)
+
+		if ((_new = (char *)malloc(total_len)) == NULL)
+		//my_perror("malloc", FATAL);
+			return "NULL";
+
+		(_new)[total_len - 1] = '\0';
+
+		/* copy part before match */
+		for (i = 0; i < replace_index; ++i)
+			(_new)[i] = source[i];
+
+		/* insert new string */
+		for (i = replace_index; i < replace_index + out_len; ++i)
+			(_new)[i] = out[i - replace_index];
+
+ 		/* copy part after match */
+		for (i = replace_index + out_len; i < total_len - 1; ++i)
+		(_new)[i] = source[(i - out_len + in_len)];
+	}
+	free(source);
+	return _new;
+}
+
 /* ======================(function header)========================
 Function Name: int strcutail (char *str, const char *n, int pos)
 Description: To remove the sub-string which is starting at 
@@ -261,6 +313,45 @@ char *strmhead (char *str, const char *n, int pos)
 		free (_new); _new = NULL;
 	}
 	
+	return str;
+}
+
+char *index_str (char *str, const char *n, int index)
+{
+	int i, str_len = strlen(str), delm_len = strlen(n);
+	int _newStrLen = 0;
+	int idx1, idx2;
+	char *_new;
+	
+	index = abs(index);
+	if(index == 0 || index > matchStrPosAt(n, str, -1) + 1)
+		return NULL;
+	else if(index == 1){
+		idx1 = 0;
+		idx2 = matchStrPosAt(n, str, index) - delm_len - 1;
+	}
+	else if(index > 1 && index <= matchStrPosAt(n, str, -1)){
+		idx1 = matchStrPosAt(n, str, index - 1) + 1;
+		idx2 = matchStrPosAt(n, str, index) - delm_len - 1;
+	}
+	else if(index == matchStrPosAt(n, str, -1) + 1){
+		idx1 = matchStrPosAt(n, str, index - 1) + 1;
+		idx2 = 	str_len - 1;
+	}
+	_newStrLen = idx2 - idx1 + 1;
+	if(_newStrLen < 0)
+		_newStrLen = str_len - 1;
+	/*printf("idx1 = %d\n", idx1);
+	printf("idx2 = %d\n", idx2);
+	printf("new strlen = %d\n", _newStrLen);*/
+	if ((_new = (char *)malloc(sizeof(char*) * _newStrLen + 1)) == NULL)
+		return NULL;
+	(_new)[_newStrLen + 1] = '\0';		
+	for (i = 0; i <= _newStrLen; ++i)
+		(_new)[i] = str[idx1+i];
+
+	strcpy(str, _new);
+	//StrFree(_new); _new = NULL;
 	return str;
 }
 
@@ -600,45 +691,82 @@ int getTZ(char **tz)
 Function Name:int setTZ(char **tz){}
 Description : To Setup the system date、time by timezone information.
 Arguments : char * tz
-Return : a string with format "[+|-]hh:mm"
+Return : a string with format "[+|-]hh:mm:ss"
 written by Jackie Xie
 Date : 2011/08/18
 ================================================================*/
 int setTZ(char *timezone)
 {
-	struct tm *tptr;
+	struct tm *tptr, time_to_set;
 	struct timeval tv;
 	struct timezone tz;
 	time_t secs;
 	int utc = 0;
-	int hsecs, msecs;
+	int hsecs, msecs = 0, ssecs = 0, tzhour, tzminute;
 	int rc;
 	char *sHour = strdup(timezone);
 	char *sMin = strdup(timezone);
+	char *sSec = strdup(timezone);
+	char *sTZ = strdup(timezone);
+	bool tz_is_minus = false;
 
+	if(!timezone)
+		return -1;
+
+	if(strstr(timezone, "-")) tz_is_minus = true;
 	(void) time(&secs);
 	tptr = localtime(&secs);
-	printf("The timezone is 'UTC%s'\n", timezone);
-	printf("The current date/time :\n");
-	printf("        Date : %02d-%02d-%02d\n", 1900+tptr->tm_year, tptr->tm_mon+1, tptr->tm_mday);
-	printf("        Time : %02d:%02d:%02d\n\n", tptr->tm_hour, tptr->tm_min, tptr->tm_sec);
+	printf("The timezone is：UTC%s\n", timezone);
+	printf("The current date/time：\n");
+	printf("	Date：%02d-%02d-%02d\n", 1900+tptr->tm_year, tptr->tm_mon+1, tptr->tm_mday);
+	printf("	Time：%02d:%02d:%02d\n\n", tptr->tm_hour, tptr->tm_min, tptr->tm_sec);
 
-	if(strstr(timezone,":")){
-		hsecs = atoi(strcutail(sHour, ":", -100)) * 3600;
-		if(strstr(timezone, "-"))
-			msecs = atoi(strmhead(sMin, ":", -1)) * 60 * (-1);
-		else
-			msecs = atoi(strmhead(sMin, ":", -1)) * 60;
+	if(strstr(timezone,":") && matchStrPosAt(":", timezone, -1) == 1){
+		hsecs = atoi(index_str(sHour, ":", 1)) * 3600;
+		msecs = atoi(index_str(sMin, ":", 2)) * 60;
+		tzminute = atoi(sMin);
+		if(tz_is_minus)
+			msecs = msecs * (-1);
+	}
+	else if(strstr(timezone, ":") && matchStrPosAt(":", timezone, -1) == 2){
+		hsecs = atoi(index_str(sHour, ":", 1)) * 3600;
+		msecs = atoi(index_str(sMin, ":", 2)) * 60;
+		ssecs = atoi(index_str(sSec, ":", 3));
+		tzminute = atoi(sMin);
+		if(tz_is_minus){
+			msecs = msecs * (-1);
+			ssecs = ssecs * (-1);
+		}
 	}
 	else{
 		hsecs = atoi(sHour) * 3600;
 		msecs = 0;
 	}	
 
+	if(msecs == 0 && ssecs == 0){
+		if(hsecs > 0)
+			sprintf(sTZ, "GMT+%02d", hsecs/3600);
+		else
+			sprintf(sTZ, "GMT%02d", hsecs/3600);
+	}
+	else if(ssecs == 0){
+		if(hsecs > 0)
+			sprintf(sTZ, "GMT+%02d:%02d", hsecs/3600, msecs/60);
+		else
+			sprintf(sTZ, "GMT%02d:%02d", hsecs/3600, abs(msecs/60));
+	}
+	else{
+		if(hsecs > 0)
+			sprintf(sTZ, "GMT+%02d:%02d:%02d", hsecs/3600, msecs/60, ssecs);
+		else
+			sprintf(sTZ, "GMT%02d:%02d:%02d", hsecs/3600, abs(msecs/60), abs(ssecs));
+	}
+
+	tzhour = atoi(sHour);
+	nvram_set("time_zone", sTZ);
 	printf("hrsec = %d\n", hsecs);
 	printf("minsec = %d\n", msecs);
-	
-	utc = hsecs + msecs;
+	utc = hsecs + msecs + ssecs;
 	 (void) time(&secs);
 	
 	if(utc==0)
@@ -652,6 +780,7 @@ int setTZ(char *timezone)
 	if ((tv.tv_sec = mktime(tptr)) == (time_t)-1)
 	{
 		printf("Cannot convert system time\n");
+		return -1;
 	}
 
 	tz.tz_minuteswest = -(secs / 60);	
@@ -673,6 +802,8 @@ int setTZ(char *timezone)
 
 	free(sMin);
 	free(sHour);
+	free(sSec);
+	free(sTZ);
 	
 	return 0;
 }
@@ -740,10 +871,10 @@ Date : 2011/08/28
 int setTZName(char *tzname)
 {
 	char *offsets = strdup(tzname);
-	char stz[10]={0};
-	char dtz[10]={0};
-	char stz_offset[10]={0};
-	char dtz_offset[10]={0};
+	char stz[12]={0};
+	char dtz[12]={0};
+	char stz_offset[12]={0};
+	char dtz_offset[12]={0};
 	char *start_dst = NULL;
 	char *end_dst = NULL;
 	int len, i = -1, chstr = 0, chnum = 0;
@@ -782,7 +913,7 @@ int setTZName(char *tzname)
 		currtime.week = atoi(week);
 		currtime.month = atoi(month);
 		currtime.year = atoi(year);
-		printf("current time is %d-%d-%dT%d:%d:%dZ\n", currtime.year, currtime.month, currtime.day, currtime.time.hour, currtime.time.minute, currtime.time.second);
+		printf("current time is %d-%02d-%02dT%02d:%02d:%02dZ\n", currtime.year, currtime.month, currtime.day, currtime.time.hour, currtime.time.minute, currtime.time.second);
 
 		start_dst = strdup(tzname);
 		end_dst = strdup(tzname);
@@ -918,7 +1049,7 @@ int setTZName(char *tzname)
 				sdst.year = currtime.year;
 				edst.year = currtime.year + 1;
 			}
-			else if(currtime.month <= edst.month){
+			else if(currtime.month <= edst.month || sdst.month > currtime.month){
 				sdst.year = currtime.year - 1;
 				edst.year = currtime.year;
 			}
@@ -1010,6 +1141,7 @@ int setTZName(char *tzname)
 		char *dminute = strdup(dtz_offset);
 		char *dsecond = strdup(dtz_offset);
 		int stzhour = 0,  dtzhour = 0, stzminute = 0, dtzminute = 0, stzsecond = 0, dtzsecond = 0;
+		bool stz_is_minus = false, dtz_is_minus = false;
 		
 		strcutail(shour, ":", -1);
 		if(matchStrPosAt(":", sminute, -1) == 2)
@@ -1021,6 +1153,11 @@ int setTZName(char *tzname)
 		else
 			stzsecond = 0;
 
+#ifdef ENABLE_TIMEZONE_OFFSET
+		if(strstr(dtz_offset, "-")) dtz_is_minus = true;
+#else
+		if(strstr(dtz_offset, "-")) dtz_is_minus = false;
+#endif
 		dtzhour = atoi(strcutail(dhour, ":", -1));
 		if(matchStrPosAt(":", dminute, -1) == 2)
 			dtzminute = atoi(GetStrBetweenStr(dminute, ":", ":"));
@@ -1030,53 +1167,103 @@ int setTZName(char *tzname)
 			dtzsecond = atoi(strmhead(dsecond, ":", -2));
 		else
 			dsecond = 0;
+/*		
+		shour = index_str(shour, ":", 1);
+		stzminute = atoi(index_str(sminute, ":", 2));
+		stzsecond = atoi(index_str(ssecond, ":", 3));
+		dtzhour = atoi(index_str(dhour, ":", 1));
+		dtzminute = atoi(index_str(dminute, ":", 2));
+		dtzsecond = atoi(index_str(dsecond, ":", 3));
+*/
+		if(dtz_is_minus){
+			dtzminute = dtzminute * (-1);
+			dtzsecond = dtzsecond * (-1);
+		}
 
 		if(strstr(stz, "GMT") || strstr(stz, "UTC") || !strcmp(stz, ""))
 			stzhour = atoi(shour);
 		else
 			stzhour = atoi(shour) * (-1);
 
-		if(strstr(dhour,"-")){
-			dtzminute = dtzminute * (-1);
-			dtzsecond = dtzsecond * (-1);
+#ifdef ENABLE_TIMEZONE_OFFSET
+		if(stzhour < 0 || ((strstr(stz, "GMT") || strstr(stz, "UTC") || !strcmp(stz, "")) && strstr(shour, "-"))
+			|| (!strcmp(shour, "00") && !strstr(shour, "-") && !(strstr(stz, "GMT") || strstr(stz, "UTC") || !strcmp(stz, ""))))
+			stz_is_minus = true;
+
+		if(stz_is_minus){
+			stzminute = stzminute * (-1);
+			stzsecond = stzsecond * (-1);
 		}
+
+		if((stz_is_minus && (abs(stzhour) > abs(dtzhour) || ((abs(dtzhour) - abs(stzhour) == 0) && (abs(stzminute) > abs(dtzminute)
+			|| ((stzminute - dtzminute == 0) && abs(stzsecond) > abs(dtzsecond))))))
+				|| (dtz_is_minus && (abs(stzhour) < abs(dtzhour) || ((abs(dtzhour) - abs(stzhour) == 0) && (abs(stzminute) < abs(dtzminute)
+					|| ((stzminute - dtzminute == 0) && abs(stzsecond) < abs(dtzsecond)))))))
+			dtz_is_minus = true;
+		else
+			dtz_is_minus = false;
 
 		dtzsecond += stzsecond;
 		if(dtzsecond >= 60){
 			dtzsecond %= 60;
 			++dtzminute;
 		}
-		else if(dtzsecond < 0){
+		else if((!dtz_is_minus && dtzsecond < 0 && dtzhour != 0) || (dtz_is_minus && abs(dtzsecond) >60)){
 			dtzsecond += 60;
 			--dtzminute;
 		}
+		else if(dtz_is_minus && dtzsecond > 0){
+			dtzsecond -= 60;
+			++dtzminute;
+		}
+
 		dtzminute += stzminute;
 		if(dtzminute >= 60){
 			dtzminute %= 60;
 			++dtzhour;
 		}
-		else if(dtzminute < 0){
+		else if((!dtz_is_minus && dtzminute < 0 && dtzhour != 0) || (dtz_is_minus && abs(dtzminute) >60)){
 			dtzminute += 60;
 			--dtzhour;
 		}
+		else if(dtz_is_minus && dtzminute > 0){
+			dtzminute -= 60;
+			++dtzhour;
+		}
 
-		if(dstlen && !dofflen || dtzhour == 0)
-			dtzhour = stzhour + 1; 
+		if(!dtz_is_minus && dstlen && !dofflen || (dtzhour == 0 && dtzminute ==0 && dtzsecond == 0))
+			dtzhour += stzhour + 1; 
 		else if(dtzhour != 0)
 			dtzhour += stzhour;
 		else 
 			dtzhour = stzhour;
 
-		if(strstr(stz_offset, ":") || strstr(dtz_offset, ":"))
+#else
+		if(!dtz_is_minus) dtzhour = dtzhour * (-1);
+		if((dstlen && !dofflen) || dtzhour == 0){
+			dtzhour = stzhour + 1;
+			dtzminute = stzminute;
+			dtzsecond = stzsecond;
+		}
+#endif
+
+		if(dtzhour == 0 && (dtzminute < 0 || dtzsecond < 0))
+			dtz_is_minus = true;
+
+		if((strstr(stz_offset, ":") || strstr(dtz_offset, ":")) && ((dtzminute != 0 || dtzsecond != 0) || (stzminute != 0 || stzsecond != 0)))
 		{
 			if(dtzhour > 0)
 				sprintf(dtz_offset, "+%02d:%02d:%02d", dtzhour, dtzminute, dtzsecond);
+			else if(dtzhour == 0 && dtz_is_minus)
+				sprintf(dtz_offset, "-%02d:%02d:%02d", dtzhour, abs(dtzminute), abs(dtzsecond));
 			else
-				sprintf(dtz_offset, "%02d:%02d:%02d", dtzhour, dtzminute, dtzsecond);
+				sprintf(dtz_offset, "%02d:%02d:%02d", dtzhour, abs(dtzminute), abs(dtzsecond));
 			if(stzhour > 0)
 				sprintf(stz_offset, "+%02d:%02d:%02d", stzhour, stzminute, stzsecond);
+			else if(stzhour == 0 && stz_is_minus)
+				sprintf(stz_offset, "-%02d:%02d:%02d", stzhour, abs(stzminute), abs(stzsecond));
 			else
-				sprintf(stz_offset, "%02d:%02d:%02d", stzhour, stzminute, stzsecond);
+				sprintf(stz_offset, "%02d:%02d:%02d", stzhour, abs(stzminute), abs(stzsecond));
 		}
 		else
 		{
@@ -1109,13 +1296,19 @@ int setTZName(char *tzname)
 				(currtime.day < dayOfMonth(edst) || (currtime.day == dayOfMonth(edst) && 
 					(currtime.time.hour < edst.time.hour) || (currtime.time.hour == edst.time.hour && (currtime.time.minute < edst.time.minute || 
 						(currtime.time.minute == edst.time.minute && currtime.time.second < edst.time.second))))))))));
-	if(duringTheDST)
+	if(duringTheDST){
 	/* if(ptime >= sdst.ptime && ptime <= edst.ptime) */
 	/*if((currtime.year > sdst.year && currtime.year == edst.year && currtime.day <= dayOfMonth(edst)) ||
 		(currtime.year == sdst.year && currtime.month >= sdst.month && currtime.day >= dayOfMonth(sdst))) */
 		setTZ(dtz_offset);
-	else
+		nvram_set("localtimezone", dtz_offset);
+		nvram_set("daylight_savings_used", "true");
+	}
+	else{
 		setTZ(stz_offset);
+		nvram_set("localtimezone", stz_offset);
+		nvram_set("daylight_savings_used", "false");
+	}
 
 	free(offsets); free(start_dst); free(end_dst);
 	return 0;

@@ -149,7 +149,7 @@ AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_FUNC_STRTOD
-AC_CHECK_FUNCS([alarm bzero dup2 inet_ntoa memset mkdir select setenv socket strchr strcspn strncasecmp strcasecmp strspn strtol strtoul sysinfo])
+AC_CHECK_FUNCS([alarm bzero dup2 inet_ntoa memset mkdir select setenv socket strchr strcspn strdup strerror strncasecmp strcasecmp strspn strstr strtol strtoul sysinfo])
 
 #
 # Modules configuration
