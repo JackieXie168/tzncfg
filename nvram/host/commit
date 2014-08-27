@@ -8,4 +8,4 @@ if [ ! -d /tmp/conf ]; then \
    mkdir -p /tmp/conf ; \
 fi
 
-nvram show > /tmp/conf/nvram.config
+nvram show > /tmp/conf/nvram.conf

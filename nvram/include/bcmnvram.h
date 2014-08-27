@@ -19,12 +19,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/ipc.h>
 #include <sys/sem.h>
 #include <sys/shm.h>
 #include <semaphore.h>
 //#include <typedefs.h>
 #include <typedefs.h>
+#include <unistd.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -60,7 +62,7 @@ struct varinit {
 /*share memory identifier (note. must greater than share memory size)*/
 #define NVRAMKEY 655350
 /*share memory size*/
-#define SHARESIZE 262144
+#define SHARESIZE 65536*30
 #define MAGIC_ID "<NVRAM>"
 
 #if __linux__
@@ -112,6 +114,7 @@ extern void init_nvram(void);
 extern int nvram_invmatch(char *name, char *match);
 extern int nvram_match(char *name, char *match);
 extern int nvram_commit(void);
+extern char *nvram_free();
 extern char *nvram_get(const char *name);
 extern int nvram_set(const char *name, const char *val);
 extern int nvram_unset(const char *s);

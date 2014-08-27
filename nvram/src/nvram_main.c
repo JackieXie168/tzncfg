@@ -17,12 +17,12 @@ static void
 usage(void)
 {
 #ifndef TARGET_DEVICE
-	fprintf(stderr, "usage: nvram [get <name>] [set <name>=<value>] [unset <name>] [show] [clean] [commit] [import <file>] [reload <file>] [restore <file>] [backup <file>]\n");
+	fprintf(stderr, "usage: nvram [get <name>] [set <name>=<value>] [unset <name>] [show] [clean] [commit] [import <file>] [reload <file>] [restore <file>] [backup <file>] [free]\n");
 #else
 #if __linux__
-	fprintf(stderr, "usage: nvram [get name] [set name=value] [unset name] [show] [clean] [commit] [backup <file>] [restore <file>]\n");
+	fprintf(stderr, "usage: nvram [get name] [set name=value] [unset name] [show] [clean] [commit] [backup <file>] [restore <file>] [free]\n");
 #elif defined(darwin) || defined(__FreeBSD__) || defined(__APPLE__) || defined(MACOSX)
-	fprintf(stderr, "usage: xnvram [get <name>] [set <name>=<value>] [unset <name>] [show] [clean] [commit] [import <file>] [reload <file>] [restore <file>] [backup <file>]\n");
+	fprintf(stderr, "usage: xnvram [get <name>] [set <name>=<value>] [unset <name>] [show] [clean] [commit] [import <file>] [reload <file>] [restore <file>] [backup <file>] [free]\n");
 #endif
 #endif
 	exit(0);
@@ -73,11 +73,18 @@ main(int argc, char **argv)
 				nvram_set(name, value);
 			}
 		}
+		else if (!strncmp(*argv, "free", 4)) {
+			nvram_free();
+		}
 		else if (!strncmp(*argv, "unset", 5)) {
 			if (*++argv)
 				nvram_unset(*argv);
 		}
 		else if (!strncmp(*argv, "commit", 5)) {
+			struct stat st = {0};
+			if (stat(CONF_PATH, &st) == -1) {
+				mkdir(CONF_PATH, 0700);
+			}
 			nvram_commit();
 		}
 		else if (!strncmp(*argv, "show", 4) ||

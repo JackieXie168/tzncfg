@@ -37,9 +37,9 @@ union semun {
 #elif defined(__FreeBSD__) || defined(__APPLE__) || defined(MACOSX)
 typedef union {
 #endif
-	int val;
-	struct semid_ds *buf;
-	unsigned short *array;
+	int val;   /* Value for SETVAL */
+	struct semid_ds *buf;    /* Buffer for IPC_STAT, IPC_SET */
+	unsigned short *array;  /* Array for GETALL, SETALL */
 #if __linux__
 };
 #elif defined(__FreeBSD__) || defined(__APPLE__) || defined(MACOSX)
@@ -52,6 +52,7 @@ inline void set_sem(int semid)
 	if (semctl(semid,0,SETVAL,sem_union)==-1)
 		printf ("set sem error\n");
 }
+
 inline void sem_up(int semid)
 {
 	struct sembuf sem_b;
@@ -404,6 +405,53 @@ void nvram_accessfile()
 	}
 	fclose(fp_ptr);
 	//rename(TMP_FILE_PATH, BACKUP_FILE_PATH);
+}
+
+char *
+nvram_free()
+{
+	char *ptr=NULL, *p=NULL;
+	unsigned long total, remain, used;
+	char tmpbuf1[64]={'\0'};
+	char tmpbuf2[128]={'\0'};
+
+	if (shm_flag)
+		attach_share_memory();
+	ptr=(char *)get_curr_pos();
+
+	/*if out of share memory then re-allocate share memory*/
+	if(!ptr_start || !ptr){
+		printf ("memory doesn't get...\n");
+	}else if (ptr>=(ptr_start+SHARESIZE)) {
+		printf ("out of memory...realloc memory....\n");
+	}else{
+		total = SHARESIZE;
+		used = (unsigned long)(ptr - (char *)ptr_start);
+		remain = SHARESIZE - used;
+		p = tmpbuf2;
+
+		if(total/1000){
+			sprintf(tmpbuf1, "Total=%lu.%d KB, ", total>>10, total%1000);
+		}else
+			sprintf(tmpbuf1, "Total=%lu B, ", total);
+		strcat(p,tmpbuf1);
+		p+=strlen(tmpbuf1);
+		if(used > 1000){
+			sprintf(tmpbuf1, "Used=%lu.%03d KB, ", used/1000, used%1000);
+		}else
+			sprintf(tmpbuf1, "Used=%lu B, ", used);
+		strcat(p,tmpbuf1);
+		p+=strlen(tmpbuf1);
+		if(remain>>10){
+			sprintf(tmpbuf1, "Remain=%lu.%03d KB", remain/1000, remain%1000);
+		}else
+			sprintf(tmpbuf1, "Remain=%lu B", remain);
+		strcat(p,tmpbuf1);
+		p+=strlen(tmpbuf1);
+			
+		printf("%s\n", tmpbuf2);
+	}
+	return NULL;
 }
 
 char *

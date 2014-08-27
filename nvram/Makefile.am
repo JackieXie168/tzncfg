@@ -30,7 +30,7 @@ else
 nvram_SOURCES= $(NVRAM_FILES)
 endif
 
-AM_CFLAGS= -Iinclude -Invram
+AM_CFLAGS= -I$(top_srcdir) -Iinclude -Invram
 #LIBS= -L/usr/lib -lpthread
 
 pkgconfigdir = $(libdir)/pkgconfig
@@ -43,8 +43,6 @@ c_sources = ./src/nvram_cavium.c
 
 library_includedir=$(includedir)/$(GENERIC_LIBRARY_NAME)-$(GENERIC_API_VERSION)/$(GENERIC_LIBRARY_NAME)
 library_include_HEADERS = $(h_sources)
-
-INCLUDES = -I$(top_srcdir)
 
 lib_LTLIBRARIES= libnvram-1.0.la
 libnvram_1_0_la_SOURCES= $(h_sources) $(c_sources)

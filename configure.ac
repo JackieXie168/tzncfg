@@ -3,7 +3,7 @@
 # Process this file with autoconf to produce a configure script.
 
 dnl AC_PREREQ(2.61)
-AC_INIT([tznconfig nvram/nvram],[v0.9],[Jackie.CPlusPlus@gmail.com])
+AC_INIT([tznconfig nvram/nvram],[v1.01],[Jackie.CPlusPlus@gmail.com])
 AM_INIT_AUTOMAKE(tznconfig, v0.9)         
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADER([config.h])
@@ -16,6 +16,7 @@ dnl Package name and version number (user defined)
 dnl -----------------------------------------------
 
 GENERIC_LIBRARY_NAME=nvram
+X_LIBRARY_NAME=xutils
 
 #release versioning
 GENERIC_MAJOR_VERSION=1
@@ -149,7 +150,9 @@ AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_FUNC_STRTOD
-AC_CHECK_FUNCS([alarm bzero dup2 inet_ntoa memset mkdir select setenv socket strchr strcspn strdup strerror strncasecmp strcasecmp strspn strstr strtol strtoul sysinfo])
+AC_FUNC_MKTIME
+
+AC_CHECK_FUNCS([alarm bzero dup2 getdelim gettimeofday inet_ntoa memset mkdir select setenv socket strchr strcspn strdup strerror strncasecmp strcasecmp strspn strstr strtol strtoul sysinfo])
 
 #
 # Modules configuration
@@ -245,6 +248,7 @@ AC_MSG_RESULT(yes),
 AC_MSG_RESULT(no))
 
 AC_CONFIG_FILES([Makefile
+	xutils/Makefile
 	nvram/include/Makefile
 	nvram/Makefile
 	nvram/testcase/Makefile
@@ -252,7 +256,7 @@ AC_CONFIG_FILES([Makefile
 	nvram/host/Makefile
 ])
 
-AC_OUTPUT(nvram/nvram-1.0.pc)
+AC_OUTPUT([nvram/nvram-1.0.pc xutils/xutils-1.0.pc])
 
 echo \
 "-------------------------------------------------
