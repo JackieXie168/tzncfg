@@ -35,9 +35,9 @@ extern "C" {
 struct nvram_header {
 	uint32 magic;
 	uint32 len;
-	uint32 crc_ver_init;	/* 0:7 crc, 8:15 ver, 16:27 init, mem. test 28, 29-31 reserved */
+	uint32 crc_ver_init;		/* 0:7 crc, 8:15 ver, 16:27 init, mem. test 28, 29-31 reserved */
 	uint32 config_refresh;	/* 0:15 config, 16:31 refresh */
-	uint32 config_ncdl;	/* ncdl values for memc */
+	uint32 config_ncdl;		/* ncdl values for memc */
 };
 
 struct nvram_tuple {
@@ -50,14 +50,16 @@ struct nvram_tuple {
 
 struct varinit {
 	int name_offset;		/*offset of name string : ex. wan_proto=*/
-	int text_offset;		/*offset of value string : ex. pppoe*/
-	int next_offset;		/*offset of next varinit struct*/
+	int text_offset;			/*offset of value string : ex. pppoe*/
+	int next_offset;			/*offset of next varinit struct*/
 	unsigned short len;
 	unsigned short validated;
 };
 
-#define INTOFF sem_up(sem_id)		/*set semaphore*/
-#define INTON sem_down(sem_id)		/*unset semaphore*/
+#define INTOFF sem_up(sem_id)									/*set semaphore*/
+#define INTON sem_down(sem_id)									/*unset semaphore*/
+#define INTOFF_REALLOC sem_up(sem_id_realloc)		/*set semaphore*/
+#define INTON_REALLOC sem_down(sem_id_realloc)	/*unset semaphore*/
 
 /*share memory identifier (note. must greater than share memory size)*/
 #define NVRAMKEY 655350
@@ -217,7 +219,7 @@ extern int BCMINIT(nvram_getall)(char *buf, int count);
 #define NVRAM_MAGIC		0x48534C46	/* 'FLSH' */
 #define NVRAM_VERSION		1
 #define NVRAM_HEADER_SIZE	20
-#define NVRAM_SPACE		0x160000
+#define NVRAM_SPACE		0x1600000
 
 #ifdef __cplusplus
 } /* extern "C" */

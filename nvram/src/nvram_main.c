@@ -104,6 +104,7 @@ main(int argc, char **argv)
 			re_alloc();
 		}
 		else if (!strncmp(*argv, "default", 7)) {
+			nvram_default();
 			FILE *fp;
 			fp = fopen(REGION_FILE_PATH, "r");
 			if (fp) {

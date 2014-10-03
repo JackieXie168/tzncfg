@@ -43,3 +43,7 @@
 	．import parsing programs：tokenlist & xobjconf.
 	．add test cases for tokenlist & xobjconf.
 	．restructure the program tznconfig.
+
+2014/10/03 - v1.01
+	．Add nvram_default() function.
+	．Improve reallocate share memory technique.
