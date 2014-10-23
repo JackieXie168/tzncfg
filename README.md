@@ -86,10 +86,10 @@ Setup system date time by local time zone name
 	on Mac OS X
 		$ xnvram import nvram/conf/timezone-2013.conf
 		$ sudo tznconfig -x BRT3BRST,M10.3.0/0,M2.3.0/0
-		$ sudo tznconfig -x xnvram get Pacific/Marquesas
+		$ sudo tznconfig -x `xnvram get Pacific/Marquesas`
 
 	on Linux
 		$ nvram import nvram/conf/timezone-2013.conf
 		$ sudo tznconfig -x BRT3BRST,M10.3.0/0,M2.3.0/0
-		$ sudo tznconfig -x nvram get Pacific/Marquesas 
+		$ sudo tznconfig -x `nvram get Pacific/Marquesas`
 
