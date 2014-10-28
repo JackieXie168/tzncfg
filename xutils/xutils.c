@@ -1035,6 +1035,43 @@ int setTZName(char *tzname)
 	return 0;
 }
 
+long long strtonum(const char *numstr, long long minval, long long maxval, const char **errstrp)
+{
+	long long ll = 0;
+	char *ep;
+	int error = 0;
+	struct errval {
+		const char *errstr;
+		int err;
+	} ev[4] = {
+		{ NULL,		0 },
+		{ "invalid",	EINVAL },
+		{ "too small",	ERANGE },
+		{ "too large",	ERANGE },
+	};
+
+	ev[0].err = errno;
+	errno = 0;
+	if (minval > maxval)
+		error = INVALID;
+	else {
+		ll = strtoll(numstr, &ep, 10);
+		if (numstr == ep || *ep != '\0')
+			error = INVALID;
+		else if ((ll == LLONG_MIN && errno == ERANGE) || ll < minval)
+			error = TOOSMALL;
+		else if ((ll == LLONG_MAX && errno == ERANGE) || ll > maxval)
+			error = TOOLARGE;
+	}
+	if (errstrp != NULL)
+		*errstrp = ev[error].errstr;
+	errno = ev[error].err;
+	if (error)
+		ll = 0;
+
+	return (ll);
+}
+
 /* ======================(function header)========================
 Function Name:char* itos (){}
 Description:to convert integer to string
@@ -2421,4 +2458,63 @@ int mac_validator(const char* value) {
 		return 0;
 	else
 		return -1;
+}
+
+u_char parse_pfxlen(const char *s, in_addr_t *padd)
+{
+	u_int			i;
+	u_char		pfxlen;
+	in_addr_t	add;
+	in_addr_t	sadd;
+	const char	*estr;
+
+	pfxlen = (u_char) strtonum(s, 1, 32, &estr);
+	if (!estr) {
+		add = 0xffffffff;
+		for (i = 0; i < 32 - pfxlen; i++)
+			add &= ~(1 << i);        
+		add = htonl(add);
+	} else {
+		if (!strncmp(s, "0x", 2)) {
+			add = inet_addr(s);
+			if (add == 0xffffffff && strcmp(s, "0xffffffff"))
+				errx(1, "invalid mask definition \"%s\"", s);
+		} else {
+			i = inet_pton(AF_INET, s, &add);
+			if (i == -1)
+				err(1, "inet_pton");
+			else if (i == 0)
+				errx(1, "invalid mask definition \"%s\"", s);
+		}
+		for (sadd = add, pfxlen = 0; sadd; pfxlen++)
+			sadd &= sadd - 1;
+
+		/*
+		 * for sanity,
+		 * check that bits in the netmask are contiguous.
+		 */
+		for (sadd = 0xffffffff, i = 0; i < 32 - pfxlen; i++)
+			sadd &= ~(1 << i);
+		sadd = htonl(sadd);
+		if (sadd != add)
+			errx(1, "invalid mask definition \"%s\"", s);
+	}
+
+	if (padd)
+		*padd = add;
+	return (pfxlen);
+}
+
+in_addr_t parse_net(const char *net)
+{
+	in_addr_t	 add;
+
+	switch (inet_pton(AF_INET, net, &add)) {
+	case -1:
+		err(1, "inet_pton");
+	case 0:
+		errx(1, "could not parse address \"%s\"", net);
+	default:
+		return (add);
+	}
 }

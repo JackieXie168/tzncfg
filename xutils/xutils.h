@@ -16,6 +16,7 @@ extern "C" {
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <limits.h>
 #include <math.h>
 #include <poll.h>
 #include <stdarg.h>
@@ -56,6 +57,10 @@ extern "C" {
 ssize_t getdelim(char **lineptr, size_t *n, int delim, FILE *stream);
 ssize_t getline(char **lineptr, size_t *n, FILE *stream);
 #endif
+
+#define INVALID 	1
+#define TOOSMALL 	2
+#define TOOLARGE 	3
 
 #define IP_QUAD(ip)  (ip)>>24,((ip)&0x00ff0000)>>16,((ip)&0x0000ff00)>>8,((ip)&0x000000ff)
 /*
@@ -131,6 +136,7 @@ typedef struct {
 	time_t ptime;
 } datetime;
 
+long long strtonum(const char *, long long, long long, const char **);
 char* itos (int);
 int isLetters(const char *text);
 time_t _time(time_t *);
@@ -185,6 +191,8 @@ char *str2digits(char *sval, char *delimiter, int length);
 int str2id(char *sval, char *delimiter);
 char *get_one_line(char *s, int n, FILE *f);
 int mac_validator(const char* value);
+u_char parse_pfxlen(const char *, in_addr_t *);
+in_addr_t	 parse_net(const char *);
 
 #ifdef __cplusplus
 } /* extern "C" */
