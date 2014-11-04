@@ -1,9 +1,9 @@
 #!/bin/sh
 host_os=`uname -s`
 if [ "$host_os" = "Linux" ]; then
-	cfg=nvram
+	cfg=./nvram/nvram
 elif [ "$host_os" = "Darwin" -o  "$host_os" = "FreeBSD" ]; then
-	cfg=xnvram
+	cfg=./nvram/xnvram
 fi
 
 if [ ! -e tokenlist ]; then
