@@ -37,3 +37,9 @@
 2012/12/30 - v0.9
 	．import nvram functions to tznconfig package.
 	．Improve timezone accuracy.
+
+2013/09/05 - v1.0
+	．import xutils library to tznconfig package.
+	．import parsing programs：tokenlist & xobjconf.
+	．add test cases for tokenlist & xobjconf.
+	．restructure the program tznconfig.
