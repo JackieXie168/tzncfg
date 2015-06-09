@@ -190,6 +190,7 @@ int val_exist(char *name, char *value, char *delm);
 char *str2digits(char *sval, char *delimiter, int length);
 int str2id(char *sval, char *delimiter);
 char *get_one_line(char *s, int n, FILE *f);
+char *cat_file(char *name);
 int mac_validator(const char* value);
 u_char parse_pfxlen(const char *, in_addr_t *);
 in_addr_t	 parse_net(const char *);

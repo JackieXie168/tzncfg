@@ -2427,6 +2427,30 @@ char *get_one_line(char *s, int n, FILE *f)
 	return s;
 }
 
+char *cat_file(char *name)
+{
+	int i;
+	FILE *fp;
+	static char buf[512];
+
+	if (name == NULL)
+		return;
+	buf[0] = '\0';
+
+	fp = fopen(name, "r");
+	if (fp == NULL)
+		return buf;
+	get_one_line(buf, sizeof(buf), fp);
+	fclose(fp);
+
+	i = 0;
+	while (buf[i] != '\0' && buf[i] != '\r' && buf[i] != '\n')
+		i++;
+	buf[i] = '\0';
+
+	return buf;
+}
+
 int mac_validator(const char* value) {
 	/* validate MAC format: XX:XX:XX:XX:XX:XX or XXXXXXXXXXXX
 	 * XX is valid haxadecimal number (case insensitive)
